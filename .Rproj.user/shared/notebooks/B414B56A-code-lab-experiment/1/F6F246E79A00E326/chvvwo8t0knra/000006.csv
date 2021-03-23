@@ -1,0 +1,5 @@
+"0","library(cowplot)"
+"0",""
+"0","grid <- plot_grid(mycelium_mlh, cnd_mlh, ncol = 2, align = ""v"", labels = c(""A"", ""B""))"
+"0",""
+"0","grid"

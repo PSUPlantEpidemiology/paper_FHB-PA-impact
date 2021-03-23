@@ -1,0 +1,3 @@
+"0",""
+"0","mgr3 <- mgr2 %>%  "
+"0","  arrange(desc(mgr_day))"

@@ -1,0 +1,16 @@
+"0","library(car)
+
+ec50_all <- read_csv(""data/ec50_region.csv"")
+
+
+## Tebuconazole
+
+ec50_teb <- ec50_all %>%
+  filter(fungicide ==""Tebuconazole"")
+
+ec50_teb %>%
+  get_summary_stats(Estimate, type = ""full"")
+"
+"2","Error in get_summary_stats(., Estimate, type = ""full"") : 
+  could not find function ""get_summary_stats""
+"

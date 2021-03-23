@@ -1,0 +1,8 @@
+"0","library(cowplot)"
+"0",""
+"0","grid_mlh <- plot_grid(sev_mlh, don_mlh, yld_mlh, tw_mlh, fdk_mlh, seed_mlh,  ncol = 2, align = ""h"", labels = c(""A"", ""B"", ""C"", ""D"", ""E"", ""F""))"
+"0",""
+"0",""
+"0","ggsave(""figures/Figure_04.png"", width = 10, height = 12, dpi = 300)"
+"0",""
+"0",""

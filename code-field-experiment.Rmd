@@ -1,0 +1,554 @@
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+```
+
+## Loading packages
+
+```{r, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(readxl)
+library(easyanova)
+library(agricolae)
+
+```
+
+
+## FHB severity (%)
+
+```{r message=FALSE, warning=FALSE}
+
+sev <- read_excel("data/field_experiment.xlsx", sheet = "FHB_sev")
+
+```
+
+
+### Summarize data
+
+```{r}
+sev1 <- sev %>%
+  mutate(treat = as.character(treat),
+          block = as.character(block)) %>% 
+  group_by(location, block, treat, treat_code, rep) %>%
+  summarize(sev = (spikelets_dis*100)/spikelets)
+
+```
+
+
+### Analyze by location - Rock Springs
+
+```{r message=FALSE, warning=FALSE}
+
+sev1_RS <- sev1 %>% 
+   filter(location!="Manheim")
+
+sev_rs.lm<-with(sev1_RS, lm(sev~treat_code+block)) 
+
+summary(sev_rs.lm)
+anova(sev_rs.lm)
+
+cv.model(sev_rs.lm)
+LSD.test(sev_rs.lm,"treat_code", console=TRUE)
+
+```
+
+
+### Analyze by location - Manheim
+
+```{r message=FALSE, warning=FALSE}
+
+sev1_MH <- sev1 %>% 
+   filter(location!="Rock Springs")
+
+sev_mh.lm<-with(sev1_MH, lm(sev~treat_code+block)) 
+
+summary(sev_mh.lm)
+anova(sev_mh.lm)
+
+cv.model(sev_mh.lm)
+LSD.test(sev_mh.lm,"treat_code", console=TRUE)
+
+```
+
+
+### Visualize the data - FHB severity (%)
+
+```{r}
+
+sev_mlh <- sev1 %>%  
+  ggplot(aes(x = treat_code,
+             y = sev,
+             fill = location)) +
+  geom_boxplot(size = 0.6,
+               outlier.colour = NA, width=0.4,
+               position = position_dodge(width = 0.5)
+               ) +
+  geom_jitter(position=position_jitterdodge(dodge.width=0.5, jitter.width = 0.1),
+              size=1.7,
+              alpha=0.6, 
+              aes(colour=location)) +
+   theme_minimal() +
+  scale_color_manual(breaks = c("Manheim", "Rock Springs"), values=c("#00AFBB", "#E7B800")) +
+  scale_fill_manual(breaks = c("Manheim", "Rock Springs"), values=c("white", "white")) +
+  scale_x_discrete(limits=c("Check","North", "Central", "South"))+
+  labs(y = "FHB severity (%)",
+                      x = "", 
+                      title = "",
+      color = "", fill = "") +
+  theme(axis.text = element_text(size = 12),
+        plot.title = element_text(hjust = 0.5)) +
+  theme(text = element_text(size = 12)) +
+  #ylim(0,100)+
+   theme(legend.title=element_blank()) +
+   theme(legend.position = "none")+
+   theme(legend.position = "top") 
+
+sev_mlh
+
+#ggsave("figures/FHB_sev.png", width = 7, height = 4, dpi = 300)
+
+```
+
+
+
+## Deoxynivalenol (DON)
+
+```{r message=FALSE, warning=FALSE}
+
+don <- read_excel("data/field_experiment.xlsx", sheet = "DON")
+
+```
+
+
+### Analyze by location - Rock Springs
+
+```{r message=FALSE, warning=FALSE}
+
+don_rs <- don %>% 
+   filter(location!="Manheim")
+
+don_rs.lm<-with(don_rs, lm(don~treat_code+block)) 
+
+summary(don_rs.lm)
+anova(don_rs.lm)
+
+cv.model(don_rs.lm)
+LSD.test(don_rs.lm,"treat_code", console=TRUE)
+
+```
+
+
+### Analyze by location - Manheim
+
+```{r message=FALSE, warning=FALSE}
+
+don_mh <- don %>% 
+   filter(location!="Rock Springs")
+
+don_mh.lm<-with(don_mh, lm(don~treat_code+block)) 
+
+summary(don_mh.lm)
+anova(don_mh.lm)
+
+cv.model(don_mh.lm)
+LSD.test(don_mh.lm,"treat_code", console=TRUE)
+```
+
+
+### Visualize the data - Deoxynivalenol (DON)
+
+```{r}
+
+don_mlh <- don %>%  
+  ggplot(aes(x = treat_code,
+             y = don,
+             fill = location)) +
+  geom_boxplot(size = 0.6,
+               outlier.colour = NA, width=0.4,
+               position = position_dodge(width = 0.5)
+               ) +
+  geom_jitter(position=position_jitterdodge(dodge.width=0.5, jitter.width = 0.1),
+              size=1.7,
+              alpha=0.6, 
+              aes(colour=location)) +
+   theme_minimal() +
+  scale_color_manual(breaks = c("Manheim", "Rock Springs"), values=c("#00AFBB", "#E7B800")) +
+  scale_fill_manual(breaks = c("Manheim", "Rock Springs"), values=c("white", "white")) +
+   scale_x_discrete(limits=c("Check","North", "Central", "South"))+
+  labs(y = "Deoxynivalenol (ppm)",
+                      x = "", 
+                      title = "",
+      color = "", fill = "") +
+  theme(axis.text = element_text(size = 12),
+        plot.title = element_text(hjust = 0.5)) +
+  theme(text = element_text(size = 12)) +
+  #ylim(0,100)+
+   theme(legend.title=element_blank()) +
+   theme(legend.position = "none")+
+   theme(legend.position = "top") 
+
+don_mlh
+
+#ggsave("plots/don_mlh.png", width = 7, height = 4, dpi = 300)
+
+  
+```
+
+
+## Yield (kg/ha)
+
+```{r message=FALSE, warning=FALSE}
+
+yield <- read_excel("data/field_experiment.xlsx", sheet = "yield")
+
+```
+
+
+### Analyze by location - Rock Springs
+
+```{r message=FALSE, warning=FALSE}
+
+yld_rs <- yield %>% 
+   filter(location!="Manheim")
+
+yld_rs.lm<-with(yld_rs, lm(yield_kg~treat_code+block)) 
+
+summary(yld_rs.lm)
+anova(yld_rs.lm)
+
+cv.model(yld_rs.lm)
+LSD.test(yld_rs.lm,"treat_code", console=TRUE)
+
+```
+
+
+### Analyze by location - Manheim
+
+```{r message=FALSE, warning=FALSE}
+
+yld_lv <- yield %>% 
+   filter(location!="Rock Springs")
+
+yld_lv.lm<-with(yld_lv, lm(yield_kg~treat_code+block)) 
+
+summary(yld_lv.lm)
+anova(yld_lv.lm)
+
+cv.model(yld_lv.lm)
+LSD.test(yld_lv.lm,"treat_code", console=TRUE)
+```
+
+### Visualize the data - Yield
+
+```{r}
+
+yld_mlh <- yield %>%  
+  ggplot(aes(x = treat_code,
+             y = yield_kg,
+             fill = location)) +
+  geom_boxplot(size = 0.6,
+               outlier.colour = NA, width=0.4,
+               position = position_dodge(width = 0.5)
+               ) +
+  geom_jitter(position=position_jitterdodge(dodge.width=0.5, jitter.width = 0.1),
+              size=1.7,
+              alpha=0.6, 
+              aes(colour=location)) +
+   theme_minimal() +
+  scale_color_manual(breaks = c("Manheim", "Rock Springs"), values=c("#00AFBB", "#E7B800")) +
+  scale_fill_manual(breaks = c("Manheim", "Rock Springs"), values=c("white", "white")) +
+   scale_x_discrete(limits=c("Check","North", "Central", "South"))+
+  labs(y = "Yield (kg/ha)",
+                      x = "", 
+                      title = "",
+      color = "", fill = "") +
+  theme(axis.text = element_text(size = 12),
+        plot.title = element_text(hjust = 0.5)) +
+  theme(text = element_text(size = 12)) +
+  #ylim(0,100)+
+   theme(legend.title=element_blank()) +
+   theme(legend.position = "none")+
+   theme(legend.position = "top") 
+
+yld_mlh
+
+#ggsave("plots/yield_mlh.png", width = 7, height = 4, dpi = 300)
+
+  
+```
+
+
+## Test Weight
+
+```{r message=FALSE, warning=FALSE}
+
+test_weight <- read_excel("data/field_experiment.xlsx", sheet = "yield")
+
+```
+
+
+### Analyze by location - Rock Springs
+
+```{r message=FALSE, warning=FALSE}
+
+tw_RS <- test_weight %>% 
+   filter(location!="Manheim")
+
+tw_RS.lm<-with(tw_RS, lm(tw_kg~treat_code+block)) 
+
+summary(tw_RS.lm)
+anova(tw_RS.lm)
+
+cv.model(tw_RS.lm)
+LSD.test(tw_RS.lm,"treat_code", console=TRUE)
+
+```
+
+
+### Analyze by location - Manheim
+
+```{r message=FALSE, warning=FALSE}
+
+tw_LD <- test_weight %>% 
+   filter(location!="Rock Springs")
+
+tw_LD.lm<-with(tw_LD, lm(tw_kg~treat_code+block)) 
+
+summary(tw_LD.lm)
+anova(tw_LD.lm)
+
+cv.model(tw_LD.lm)
+LSD.test(tw_LD.lm,"treat_code", console=TRUE)
+
+```
+
+
+### Visualize the data - Test weight
+
+```{r}
+
+tw_mlh <- test_weight %>%  
+  ggplot(aes(x = treat_code,
+             y = tw_kg,
+             fill = location)) +
+  geom_boxplot(size = 0.6,
+               outlier.colour = NA, width=0.4,
+               position = position_dodge(width = 0.5)
+               ) +
+  geom_jitter(position=position_jitterdodge(dodge.width=0.5, jitter.width = 0.1),
+              size=1.7,
+              alpha=0.6, 
+              aes(colour=location)) +
+   theme_minimal() +
+  scale_color_manual(breaks = c("Manheim", "Rock Springs"), values=c("#00AFBB", "#E7B800")) +
+  scale_fill_manual(breaks = c("Manheim", "Rock Springs"), values=c("white", "white")) +
+   scale_x_discrete(limits=c("Check","North", "Central", "South"))+
+   labs(y = expression(Test~weight~(kg~m^-3)),
+        x = "",
+       title = "",
+       color = "",
+       fill = "" ) +
+  theme(axis.text = element_text(size = 12),
+        plot.title = element_text(hjust = 0.5)) +
+  theme(text = element_text(size = 12)) +
+  #ylim(0,100)+
+   theme(legend.title=element_blank()) +
+   theme(legend.position = "none")+
+   theme(legend.position = "top") 
+
+tw_mlh
+
+#ggsave("plots/tw_mlh.png", width = 7, height = 4, dpi = 300)
+
+  
+```
+
+
+## Fusarium damage kernel (FDK)
+
+```{r message=FALSE, warning=FALSE}
+
+fdk <- read_excel("data/field_experiment.xlsx", sheet = "quality")
+
+```
+
+
+### Analyze by location - Rock Springs
+
+```{r message=FALSE, warning=FALSE}
+
+fdk_RS <- fdk %>% 
+   filter(location!="Manheim")
+
+fdk_RS.lm<-with(fdk_RS, lm(FDK~treat_code+block)) 
+
+summary(fdk_RS.lm)
+anova(fdk_RS.lm)
+
+cv.model(fdk_RS.lm)
+LSD.test(fdk_RS.lm,"treat_code", console=TRUE)
+
+```
+
+  
+
+### Analyze by location - Manheim
+
+```{r message=FALSE, warning=FALSE}
+
+fdk_LD <- fdk %>% 
+   filter(location!="Rock Springs")
+
+fdk_LD.lm<-with(fdk_LD, lm(FDK~treat_code+block)) 
+
+summary(fdk_LD.lm)
+anova(fdk_LD.lm)
+
+cv.model(fdk_LD.lm)
+LSD.test(fdk_LD.lm,"treat_code", console=TRUE)
+
+```
+  
+
+### Visualize the data - FDK
+
+```{r}
+
+fdk_mlh <- fdk %>%  
+  ggplot(aes(x = treat_code,
+             y = FDK,
+             fill = location)) +
+  geom_boxplot(size = 0.6,
+               outlier.colour = NA, width=0.4,
+               position = position_dodge(width = 0.5)
+               ) +
+  geom_jitter(position=position_jitterdodge(dodge.width=0.5, jitter.width = 0.1),
+              size=1.7,
+              alpha=0.6, 
+              aes(colour=location)) +
+   theme_minimal() +
+  scale_color_manual(breaks = c("Manheim", "Rock Springs"), values=c("#00AFBB", "#E7B800")) +
+  scale_fill_manual(breaks = c("Manheim", "Rock Springs"), values=c("white", "white")) +
+   scale_x_discrete(limits=c("Check","North", "Central", "South"))+
+   labs(y = "Fusarium-damaged kernels (%)",
+        x = "",
+       title = "",
+       color = "",
+       fill = "" ) +
+  theme(axis.text = element_text(size = 12),
+        plot.title = element_text(hjust = 0.5)) +
+  theme(text = element_text(size = 12)) +
+  #ylim(0,100)+
+   theme(legend.title=element_blank()) +
+   theme(legend.position = "none")+
+   theme(legend.position = "top") 
+
+fdk_mlh
+
+#ggsave("plots/fdk_mlh.png", width = 7, height = 4, dpi = 300)
+
+  
+```
+
+
+## Seed germination (%)
+
+```{r message=FALSE, warning=FALSE}
+
+germinability <- read_excel("data/field_experiment.xlsx", sheet = "germinability")
+
+```
+
+
+
+### Analyze by location - Rock Springs
+
+```{r message=FALSE, warning=FALSE}
+
+germ_RS <- germinability %>% 
+   filter(location!="Manheim")
+
+germ_RS.lm<-with(germ_RS, lm(perc~treat_code+block)) 
+
+summary(germ_RS.lm)
+anova(germ_RS.lm)
+
+cv.model(germ_RS.lm)
+LSD.test(germ_RS.lm,"treat_code", console=TRUE)
+
+```
+
+
+  Seed germination was not influenced by treatments in Rock Springs.
+
+
+### Analyze by location - Manheim
+
+```{r message=FALSE, warning=FALSE}
+
+germ_LD <- germinability %>% 
+   filter(location!="Rock Springs")
+
+germ_LD.lm<-with(germ_LD, lm(perc~treat_code+block)) 
+
+summary(germ_LD.lm)
+anova(germ_LD.lm)
+
+cv.model(germ_LD.lm)
+LSD.test(germ_LD.lm,"treat_code", console=TRUE)
+
+```
+
+
+### Visualize the data - Seed germination (%)
+
+```{r}
+
+seed_mlh <- germinability %>%  
+  ggplot(aes(x = treat_code,
+             y = perc,
+             fill = location)) +
+  geom_boxplot(size = 0.6,
+               outlier.colour = NA, width=0.4,
+               position = position_dodge(width = 0.5)
+               ) +
+  geom_jitter(position=position_jitterdodge(dodge.width=0.5, jitter.width = 0.1),
+              size=1.7,
+              alpha=0.6, 
+              aes(colour=location)) +
+   theme_minimal() +
+  scale_color_manual(breaks = c("Manheim", "Rock Springs"), values=c("#00AFBB", "#E7B800")) +
+  scale_fill_manual(breaks = c("Manheim", "Rock Springs"), values=c("white", "white")) +
+   scale_x_discrete(limits=c("Check","North", "Central", "South"))+
+   labs(y = "Seed germination (%)",
+        x = "",
+       title = "",
+       color = "",
+       fill = "" ) +
+  theme(axis.text = element_text(size = 12),
+        plot.title = element_text(hjust = 0.5)) +
+  theme(text = element_text(size = 12)) +
+   theme(legend.title=element_blank()) +
+   theme(legend.position = "none")+
+   theme(legend.position = "top") 
+
+seed_mlh
+
+#ggsave("plots/seed_ger_mlh.png", width = 7, height = 4, dpi = 300)
+
+  
+```
+
+## GRID
+
+```{r}
+library(cowplot)
+
+grid_mlh <- plot_grid(sev_mlh, don_mlh, yld_mlh, tw_mlh, fdk_mlh, seed_mlh,  ncol = 2, align = "h", labels = c("A", "B", "C", "D", "E", "F"))
+
+grid_mlh
+
+ggsave("figures/Figure_04.png", width = 10, height = 12, dpi = 300)
+
+
+```

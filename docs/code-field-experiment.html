@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>code-field-experiment.utf8</title>
+
+<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-sm-12 col-md-4 col-lg-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Investigating FHB in PA</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa fa fa-home"></span>
+     
+    About
+  </a>
+</li>
+<li>
+  <a href="FHB_severity.html">
+    <span class="fas fa-bar-chart"></span>
+     
+    FHB severity
+  </a>
+</li>
+<li>
+  <a href="code-lab-experiment.html">In vitro experiments</a>
+</li>
+<li>
+  <a href="code-field-experiment.html">In vivo experiments</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+
+</div>
+
+
+<pre class="r"><code>knitr::opts_chunk$set(echo = TRUE, warning = FALSE)</code></pre>
+<div id="loading-packages" class="section level2">
+<h2>Loading packages</h2>
+<pre class="r"><code>library(tidyverse)
+library(readxl)
+library(easyanova)
+library(agricolae)</code></pre>
+</div>
+<div id="fhb-severity" class="section level2">
+<h2>FHB severity (%)</h2>
+<pre class="r"><code>sev &lt;- read_excel(&quot;data/field_experiment.xlsx&quot;, sheet = &quot;FHB_sev&quot;)</code></pre>
+<div id="summarize-data" class="section level3">
+<h3>Summarize data</h3>
+<pre class="r"><code>sev1 &lt;- sev %&gt;%
+  mutate(treat = as.character(treat),
+          block = as.character(block)) %&gt;% 
+  group_by(location, block, treat, treat_code, rep) %&gt;%
+  summarize(sev = (spikelets_dis*100)/spikelets)</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;location&#39;, &#39;block&#39;, &#39;treat&#39;, &#39;treat_code&#39;. You can override using the `.groups` argument.</code></pre>
+</div>
+<div id="analyze-by-location---rock-springs" class="section level3">
+<h3>Analyze by location - Rock Springs</h3>
+<pre class="r"><code>sev1_RS &lt;- sev1 %&gt;% 
+   filter(location!=&quot;Manheim&quot;)
+
+sev_rs.lm&lt;-with(sev1_RS, lm(sev~treat_code+block)) 
+
+summary(sev_rs.lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = sev ~ treat_code + block)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -48.250 -12.223  -0.081  12.079  42.463 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)      47.9744     3.5663  13.452  &lt; 2e-16 ***
+## treat_codeCheck   9.5626     3.5663   2.681  0.00797 ** 
+## treat_codeNorth  10.9071     3.5663   3.058  0.00254 ** 
+## treat_codeSouth   3.4564     3.5663   0.969  0.33368    
+## block2            0.8165     3.9873   0.205  0.83797    
+## block3            8.9816     3.9873   2.253  0.02542 *  
+## block4           11.9408     3.9873   2.995  0.00311 ** 
+## block5           -2.9395     3.9873  -0.737  0.46190    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 17.83 on 192 degrees of freedom
+## Multiple R-squared:  0.146,  Adjusted R-squared:  0.1149 
+## F-statistic: 4.689 on 7 and 192 DF,  p-value: 7.092e-05</code></pre>
+<pre class="r"><code>anova(sev_rs.lm)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["int"],"align":["right"]},{"label":["Sum Sq"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Mean Sq"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["F value"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"3962.028","3":"1320.6760","4":"4.153481","5":"0.0070352431","_rn_":"treat_code"},{"1":"4","2":"6474.970","3":"1618.7425","4":"5.090891","5":"0.0006398376","_rn_":"block"},{"1":"192","2":"61049.939","3":"317.9684","4":"NA","5":"NA","_rn_":"Residuals"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>cv.model(sev_rs.lm)</code></pre>
+<pre><code>## [1] 30.89564</code></pre>
+<pre class="r"><code>LSD.test(sev_rs.lm,&quot;treat_code&quot;, console=TRUE)</code></pre>
+<pre><code>## 
+## Study: sev_rs.lm ~ &quot;treat_code&quot;
+## 
+## LSD t Test for sev 
+## 
+## Mean Square Error:  317.9684 
+## 
+## treat_code,  means and individual ( 95 %) CI
+## 
+##              sev      std  r      LCL      UCL       Min       Max
+## Central 51.73428 16.68603 50 46.76033 56.70823  0.000000  80.00000
+## Check   61.29692 15.38468 50 56.32297 66.27086 28.571429 100.00000
+## North   62.64137 22.41694 50 57.66742 67.61531  7.692308 100.00000
+## South   55.19065 18.98495 50 50.21670 60.16460 21.428571  93.33333
+## 
+## Alpha: 0.05 ; DF Error: 192
+## Critical Value of t: 1.972396 
+## 
+## least Significant Difference: 7.034224 
+## 
+## Treatments with the same letter are not significantly different.
+## 
+##              sev groups
+## North   62.64137      a
+## Check   61.29692     ab
+## South   55.19065     bc
+## Central 51.73428      c</code></pre>
+</div>
+<div id="analyze-by-location---manheim" class="section level3">
+<h3>Analyze by location - Manheim</h3>
+<pre class="r"><code>sev1_MH &lt;- sev1 %&gt;% 
+   filter(location!=&quot;Rock Springs&quot;)
+
+sev_mh.lm&lt;-with(sev1_MH, lm(sev~treat_code+block)) 
+
+summary(sev_mh.lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = sev ~ treat_code + block)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -58.559 -15.088   2.535  17.282  38.221 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)       66.199      4.427  14.953  &lt; 2e-16 ***
+## treat_codeCheck   -2.626      4.733  -0.555  0.57983    
+## treat_codeNorth   -7.640      4.733  -1.614  0.10854    
+## treat_codeSouth  -10.190      4.733  -2.153  0.03289 *  
+## block2            15.393      4.733   3.252  0.00141 ** 
+## block3            15.839      4.733   3.347  0.00103 ** 
+## block4             3.220      4.733   0.680  0.49735    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 21.17 on 153 degrees of freedom
+## Multiple R-squared:  0.1343, Adjusted R-squared:  0.1004 
+## F-statistic: 3.957 on 6 and 153 DF,  p-value: 0.001043</code></pre>
+<pre class="r"><code>anova(sev_mh.lm)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["int"],"align":["right"]},{"label":["Sum Sq"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Mean Sq"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["F value"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"2579.530","3":"859.8434","4":"1.919209","5":"0.1288002587","_rn_":"treat_code"},{"1":"3","2":"8058.126","3":"2686.0421","4":"5.995367","5":"0.0006869446","_rn_":"block"},{"1":"153","2":"68547.000","3":"448.0196","4":"NA","5":"NA","_rn_":"Residuals"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>cv.model(sev_mh.lm)</code></pre>
+<pre><code>## [1] 30.36864</code></pre>
+<pre class="r"><code>LSD.test(sev_mh.lm,&quot;treat_code&quot;, console=TRUE)</code></pre>
+<pre><code>## 
+## Study: sev_mh.lm ~ &quot;treat_code&quot;
+## 
+## LSD t Test for sev 
+## 
+## Mean Square Error:  448.0196 
+## 
+## treat_code,  means and individual ( 95 %) CI
+## 
+##              sev      std  r      LCL      UCL      Min Max
+## Central 74.81242 21.51807 40 68.20069 81.42416 26.66667 100
+## Check   72.18646 23.00818 40 65.57473 78.79819 13.33333 100
+## North   67.17235 23.97109 40 60.56061 73.78408  0.00000 100
+## South   64.62261 19.93031 40 58.01088 71.23435 20.00000 100
+## 
+## Alpha: 0.05 ; DF Error: 153
+## Critical Value of t: 1.97559 
+## 
+## least Significant Difference: 9.350405 
+## 
+## Treatments with the same letter are not significantly different.
+## 
+##              sev groups
+## Central 74.81242      a
+## Check   72.18646     ab
+## North   67.17235     ab
+## South   64.62261      b</code></pre>
+</div>
+<div id="visualize-the-data---fhb-severity" class="section level3">
+<h3>Visualize the data - FHB severity (%)</h3>
+<pre class="r"><code>sev_mlh &lt;- sev1 %&gt;%  
+  ggplot(aes(x = treat_code,
+             y = sev,
+             fill = location)) +
+  geom_boxplot(size = 0.6,
+               outlier.colour = NA, width=0.4,
+               position = position_dodge(width = 0.5)
+               ) +
+  geom_jitter(position=position_jitterdodge(dodge.width=0.5, jitter.width = 0.1),
+              size=1.7,
+              alpha=0.6, 
+              aes(colour=location)) +
+   theme_minimal() +
+  scale_color_manual(breaks = c(&quot;Manheim&quot;, &quot;Rock Springs&quot;), values=c(&quot;#00AFBB&quot;, &quot;#E7B800&quot;)) +
+  scale_fill_manual(breaks = c(&quot;Manheim&quot;, &quot;Rock Springs&quot;), values=c(&quot;white&quot;, &quot;white&quot;)) +
+  scale_x_discrete(limits=c(&quot;Check&quot;,&quot;North&quot;, &quot;Central&quot;, &quot;South&quot;))+
+  labs(y = &quot;FHB severity (%)&quot;,
+                      x = &quot;&quot;, 
+                      title = &quot;&quot;,
+      color = &quot;&quot;, fill = &quot;&quot;) +
+  theme(axis.text = element_text(size = 12),
+        plot.title = element_text(hjust = 0.5)) +
+  theme(text = element_text(size = 12)) +
+  #ylim(0,100)+
+   theme(legend.title=element_blank()) +
+   theme(legend.position = &quot;none&quot;)+
+   theme(legend.position = &quot;top&quot;) 
+
+sev_mlh</code></pre>
+<p><img src="code-field-experiment_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<pre class="r"><code>#ggsave(&quot;figures/FHB_sev.png&quot;, width = 7, height = 4, dpi = 300)</code></pre>
+</div>
+</div>
+<div id="deoxynivalenol-don" class="section level2">
+<h2>Deoxynivalenol (DON)</h2>
+<pre class="r"><code>don &lt;- read_excel(&quot;data/field_experiment.xlsx&quot;, sheet = &quot;DON&quot;)</code></pre>
+<div id="analyze-by-location---rock-springs-1" class="section level3">
+<h3>Analyze by location - Rock Springs</h3>
+<pre class="r"><code>don_rs &lt;- don %&gt;% 
+   filter(location!=&quot;Manheim&quot;)
+
+don_rs.lm&lt;-with(don_rs, lm(don~treat_code+block)) 
+
+summary(don_rs.lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = don ~ treat_code + block)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.76750 -0.22250 -0.02125  0.33375  0.76750 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)      1.64250    0.31732   5.176 0.000113 ***
+## treat_codeCheck -0.48000    0.30784  -1.559 0.139785    
+## treat_codeNorth -0.20000    0.30784  -0.650 0.525721    
+## treat_codeSouth  1.06000    0.30784   3.443 0.003621 ** 
+## block            0.13250    0.07696   1.722 0.105682    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.4867 on 15 degrees of freedom
+## Multiple R-squared:  0.6783, Adjusted R-squared:  0.5925 
+## F-statistic: 7.905 on 4 and 15 DF,  p-value: 0.001232</code></pre>
+<pre class="r"><code>anova(don_rs.lm)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["int"],"align":["right"]},{"label":["Sum Sq"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Mean Sq"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["F value"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"6.78950","3":"2.2631667","4":"9.552585","5":"0.0008962564","_rn_":"treat_code"},{"1":"1","2":"0.70225","3":"0.7022500","4":"2.964122","5":"0.1056819437","_rn_":"block"},{"1":"15","2":"3.55375","3":"0.2369167","4":"NA","5":"NA","_rn_":"Residuals"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>cv.model(don_rs.lm)</code></pre>
+<pre><code>## [1] 22.79817</code></pre>
+<pre class="r"><code>LSD.test(don_rs.lm,&quot;treat_code&quot;, console=TRUE)</code></pre>
+<pre><code>## 
+## Study: don_rs.lm ~ &quot;treat_code&quot;
+## 
+## LSD t Test for don 
+## 
+## Mean Square Error:  0.2369167 
+## 
+## treat_code,  means and individual ( 95 %) CI
+## 
+##          don       std r      LCL      UCL Min Max
+## Central 2.04 0.6188699 5 1.576032 2.503968 1.5 2.8
+## Check   1.56 0.3361547 5 1.096032 2.023968 1.2 1.9
+## North   1.84 0.2607681 5 1.376032 2.303968 1.5 2.2
+## South   3.10 0.7071068 5 2.636032 3.563968 2.2 4.0
+## 
+## Alpha: 0.05 ; DF Error: 15
+## Critical Value of t: 2.13145 
+## 
+## least Significant Difference: 0.6561496 
+## 
+## Treatments with the same letter are not significantly different.
+## 
+##          don groups
+## South   3.10      a
+## Central 2.04      b
+## North   1.84      b
+## Check   1.56      b</code></pre>
+</div>
+<div id="analyze-by-location---manheim-1" class="section level3">
+<h3>Analyze by location - Manheim</h3>
+<pre class="r"><code>don_mh &lt;- don %&gt;% 
+   filter(location!=&quot;Rock Springs&quot;)
+
+don_mh.lm&lt;-with(don_mh, lm(don~treat_code+block)) 
+
+summary(don_mh.lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = don ~ treat_code + block)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.4640 -0.1511  0.0240  0.1495  0.5720 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept)      1.06250    0.24470   4.342  0.00117 **
+## treat_codeCheck -0.40000    0.23071  -1.734  0.11085   
+## treat_codeNorth -0.08750    0.23071  -0.379  0.71171   
+## treat_codeSouth -0.06250    0.23071  -0.271  0.79148   
+## block           -0.14700    0.07296  -2.015  0.06902 . 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.3263 on 11 degrees of freedom
+## Multiple R-squared:  0.4107, Adjusted R-squared:  0.1963 
+## F-statistic: 1.916 on 4 and 11 DF,  p-value: 0.1779</code></pre>
+<pre class="r"><code>anova(don_mh.lm)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["int"],"align":["right"]},{"label":["Sum Sq"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Mean Sq"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["F value"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"0.38375","3":"0.1279167","4":"1.201639","5":"0.3544696","_rn_":"treat_code"},{"1":"1","2":"0.43218","3":"0.4321800","4":"4.059865","5":"0.0690166","_rn_":"block"},{"1":"11","2":"1.17097","3":"0.1064518","4":"NA","5":"NA","_rn_":"Residuals"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>cv.model(don_mh.lm)</code></pre>
+<pre><code>## [1] 58.52369</code></pre>
+<pre class="r"><code>LSD.test(don_mh.lm,&quot;treat_code&quot;, console=TRUE)</code></pre>
+<pre><code>## 
+## Study: don_mh.lm ~ &quot;treat_code&quot;
+## 
+## LSD t Test for don 
+## 
+## Mean Square Error:  0.1064518 
+## 
+## treat_code,  means and individual ( 95 %) CI
+## 
+##            don       std r         LCL       UCL  Min  Max
+## Central 0.6950 0.3022692 4  0.33594278 1.0540572 0.41 0.99
+## Check   0.2950 0.1967232 4 -0.06405722 0.6540572 0.19 0.59
+## North   0.6075 0.5775451 4  0.24844278 0.9665572 0.07 1.40
+## South   0.6325 0.2660044 4  0.27344278 0.9915572 0.27 0.86
+## 
+## Alpha: 0.05 ; DF Error: 11
+## Critical Value of t: 2.200985 
+## 
+## least Significant Difference: 0.5077836 
+## 
+## Treatments with the same letter are not significantly different.
+## 
+##            don groups
+## Central 0.6950      a
+## South   0.6325      a
+## North   0.6075      a
+## Check   0.2950      a</code></pre>
+</div>
+<div id="visualize-the-data---deoxynivalenol-don" class="section level3">
+<h3>Visualize the data - Deoxynivalenol (DON)</h3>
+<pre class="r"><code>don_mlh &lt;- don %&gt;%  
+  ggplot(aes(x = treat_code,
+             y = don,
+             fill = location)) +
+  geom_boxplot(size = 0.6,
+               outlier.colour = NA, width=0.4,
+               position = position_dodge(width = 0.5)
+               ) +
+  geom_jitter(position=position_jitterdodge(dodge.width=0.5, jitter.width = 0.1),
+              size=1.7,
+              alpha=0.6, 
+              aes(colour=location)) +
+   theme_minimal() +
+  scale_color_manual(breaks = c(&quot;Manheim&quot;, &quot;Rock Springs&quot;), values=c(&quot;#00AFBB&quot;, &quot;#E7B800&quot;)) +
+  scale_fill_manual(breaks = c(&quot;Manheim&quot;, &quot;Rock Springs&quot;), values=c(&quot;white&quot;, &quot;white&quot;)) +
+   scale_x_discrete(limits=c(&quot;Check&quot;,&quot;North&quot;, &quot;Central&quot;, &quot;South&quot;))+
+  labs(y = &quot;Deoxynivalenol (ppm)&quot;,
+                      x = &quot;&quot;, 
+                      title = &quot;&quot;,
+      color = &quot;&quot;, fill = &quot;&quot;) +
+  theme(axis.text = element_text(size = 12),
+        plot.title = element_text(hjust = 0.5)) +
+  theme(text = element_text(size = 12)) +
+  #ylim(0,100)+
+   theme(legend.title=element_blank()) +
+   theme(legend.position = &quot;none&quot;)+
+   theme(legend.position = &quot;top&quot;) 
+
+don_mlh</code></pre>
+<p><img src="code-field-experiment_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<pre class="r"><code>#ggsave(&quot;plots/don_mlh.png&quot;, width = 7, height = 4, dpi = 300)</code></pre>
+</div>
+</div>
+<div id="yield-kgha" class="section level2">
+<h2>Yield (kg/ha)</h2>
+<pre class="r"><code>yield &lt;- read_excel(&quot;data/field_experiment.xlsx&quot;, sheet = &quot;yield&quot;)</code></pre>
+<div id="analyze-by-location---rock-springs-2" class="section level3">
+<h3>Analyze by location - Rock Springs</h3>
+<pre class="r"><code>yld_rs &lt;- yield %&gt;% 
+   filter(location!=&quot;Manheim&quot;)
+
+yld_rs.lm&lt;-with(yld_rs, lm(yield_kg~treat_code+block)) 
+
+summary(yld_rs.lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = yield_kg ~ treat_code + block)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -365.93 -200.14   15.60   95.98  466.58 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)      4499.38     152.95  29.417 1.11e-14 ***
+## treat_codeCheck    88.64     148.39   0.597  0.55920    
+## treat_codeNorth   106.53     148.39   0.718  0.48386    
+## treat_codeSouth  -154.14     148.39  -1.039  0.31537    
+## block             109.84      37.10   2.961  0.00972 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 234.6 on 15 degrees of freedom
+## Multiple R-squared:  0.4571, Adjusted R-squared:  0.3124 
+## F-statistic: 3.158 on 4 and 15 DF,  p-value: 0.04534</code></pre>
+<pre class="r"><code>anova(yld_rs.lm)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["int"],"align":["right"]},{"label":["Sum Sq"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Mean Sq"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["F value"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"212709.6","3":"70903.18","4":"1.288049","5":"0.314648578","_rn_":"treat_code"},{"1":"1","2":"482573.3","3":"482573.25","4":"8.766576","5":"0.009716929","_rn_":"block"},{"1":"15","2":"825704.3","3":"55046.95","4":"NA","5":"NA","_rn_":"Residuals"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>cv.model(yld_rs.lm)</code></pre>
+<pre><code>## [1] 4.84839</code></pre>
+<pre class="r"><code>LSD.test(yld_rs.lm,&quot;treat_code&quot;, console=TRUE)</code></pre>
+<pre><code>## 
+## Study: yld_rs.lm ~ &quot;treat_code&quot;
+## 
+## LSD t Test for yield_kg 
+## 
+## Mean Square Error:  55046.95 
+## 
+## treat_code,  means and individual ( 95 %) CI
+## 
+##         yield_kg      std r      LCL      UCL     Min     Max
+## Central 4828.894 230.3894 5 4605.250 5052.538 4462.11 5043.83
+## Check   4917.530 123.4738 5 4693.886 5141.174 4798.36 5121.84
+## North   4935.420 319.7410 5 4711.776 5159.064 4679.33 5457.42
+## South   4674.756 395.6135 5 4451.112 4898.400 4215.30 5141.34
+## 
+## Alpha: 0.05 ; DF Error: 15
+## Critical Value of t: 2.13145 
+## 
+## least Significant Difference: 316.28 
+## 
+## Treatments with the same letter are not significantly different.
+## 
+##         yield_kg groups
+## North   4935.420      a
+## Check   4917.530      a
+## Central 4828.894      a
+## South   4674.756      a</code></pre>
+</div>
+<div id="analyze-by-location---manheim-2" class="section level3">
+<h3>Analyze by location - Manheim</h3>
+<pre class="r"><code>yld_lv &lt;- yield %&gt;% 
+   filter(location!=&quot;Rock Springs&quot;)
+
+yld_lv.lm&lt;-with(yld_lv, lm(yield_kg~treat_code+block)) 
+
+summary(yld_lv.lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = yield_kg ~ treat_code + block)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -564.8 -317.5  108.4  315.7  485.7 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)     2957.703    326.051   9.071 1.94e-06 ***
+## treat_codeCheck -154.342    307.404  -0.502    0.626    
+## treat_codeNorth   47.413    307.404   0.154    0.880    
+## treat_codeSouth    4.373    307.404   0.014    0.989    
+## block             66.377     97.210   0.683    0.509    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 434.7 on 11 degrees of freedom
+## Multiple R-squared:  0.08048,    Adjusted R-squared:  -0.2539 
+## F-statistic: 0.2407 on 4 and 11 DF,  p-value: 0.9094</code></pre>
+<pre class="r"><code>anova(yld_lv.lm)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["int"],"align":["right"]},{"label":["Sum Sq"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Mean Sq"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["F value"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"93836.64","3":"31278.88","4":"0.1655013","5":"0.9173908","_rn_":"treat_code"},{"1":"1","2":"88117.46","3":"88117.46","4":"0.4662428","5":"0.5088459","_rn_":"block"},{"1":"11","2":"2078942.50","3":"188994.77","4":"NA","5":"NA","_rn_":"Residuals"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>cv.model(yld_lv.lm)</code></pre>
+<pre><code>## [1] 14.03275</code></pre>
+<pre class="r"><code>LSD.test(yld_lv.lm,&quot;treat_code&quot;, console=TRUE)</code></pre>
+<pre><code>## 
+## Study: yld_lv.lm ~ &quot;treat_code&quot;
+## 
+## LSD t Test for yield_kg 
+## 
+## Mean Square Error:  188994.8 
+## 
+## treat_code,  means and individual ( 95 %) CI
+## 
+##         yield_kg      std r      LCL      UCL     Min     Max
+## Central 3123.645 431.6989 4 2645.222 3602.068 2780.83 3708.90
+## Check   2969.303 487.6998 4 2490.880 3447.725 2371.27 3410.30
+## North   3171.057 412.4770 4 2692.635 3649.480 2700.13 3577.76
+## South   3128.017 357.7722 4 2649.595 3606.440 2638.26 3491.68
+## 
+## Alpha: 0.05 ; DF Error: 11
+## Critical Value of t: 2.200985 
+## 
+## least Significant Difference: 676.5922 
+## 
+## Treatments with the same letter are not significantly different.
+## 
+##         yield_kg groups
+## North   3171.057      a
+## South   3128.017      a
+## Central 3123.645      a
+## Check   2969.303      a</code></pre>
+</div>
+<div id="visualize-the-data---yield" class="section level3">
+<h3>Visualize the data - Yield</h3>
+<pre class="r"><code>yld_mlh &lt;- yield %&gt;%  
+  ggplot(aes(x = treat_code,
+             y = yield_kg,
+             fill = location)) +
+  geom_boxplot(size = 0.6,
+               outlier.colour = NA, width=0.4,
+               position = position_dodge(width = 0.5)
+               ) +
+  geom_jitter(position=position_jitterdodge(dodge.width=0.5, jitter.width = 0.1),
+              size=1.7,
+              alpha=0.6, 
+              aes(colour=location)) +
+   theme_minimal() +
+  scale_color_manual(breaks = c(&quot;Manheim&quot;, &quot;Rock Springs&quot;), values=c(&quot;#00AFBB&quot;, &quot;#E7B800&quot;)) +
+  scale_fill_manual(breaks = c(&quot;Manheim&quot;, &quot;Rock Springs&quot;), values=c(&quot;white&quot;, &quot;white&quot;)) +
+   scale_x_discrete(limits=c(&quot;Check&quot;,&quot;North&quot;, &quot;Central&quot;, &quot;South&quot;))+
+  labs(y = &quot;Yield (kg/ha)&quot;,
+                      x = &quot;&quot;, 
+                      title = &quot;&quot;,
+      color = &quot;&quot;, fill = &quot;&quot;) +
+  theme(axis.text = element_text(size = 12),
+        plot.title = element_text(hjust = 0.5)) +
+  theme(text = element_text(size = 12)) +
+  #ylim(0,100)+
+   theme(legend.title=element_blank()) +
+   theme(legend.position = &quot;none&quot;)+
+   theme(legend.position = &quot;top&quot;) 
+
+yld_mlh</code></pre>
+<p><img src="code-field-experiment_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<pre class="r"><code>#ggsave(&quot;plots/yield_mlh.png&quot;, width = 7, height = 4, dpi = 300)</code></pre>
+</div>
+</div>
+<div id="test-weight" class="section level2">
+<h2>Test Weight</h2>
+<pre class="r"><code>test_weight &lt;- read_excel(&quot;data/field_experiment.xlsx&quot;, sheet = &quot;yield&quot;)</code></pre>
+<div id="analyze-by-location---rock-springs-3" class="section level3">
+<h3>Analyze by location - Rock Springs</h3>
+<pre class="r"><code>tw_RS &lt;- test_weight %&gt;% 
+   filter(location!=&quot;Manheim&quot;)
+
+tw_RS.lm&lt;-with(tw_RS, lm(tw_kg~treat_code+block)) 
+
+summary(tw_RS.lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = tw_kg ~ treat_code + block)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -9.3725 -3.2125 -0.7975  2.6144  8.5150 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)     734.0625     3.6019 203.801   &lt;2e-16 ***
+## treat_codeCheck   1.3000     3.4943   0.372    0.715    
+## treat_codeNorth   3.3600     3.4943   0.962    0.352    
+## treat_codeSouth  -1.5000     3.4943  -0.429    0.674    
+## block             1.4125     0.8736   1.617    0.127    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 5.525 on 15 degrees of freedom
+## Multiple R-squared:  0.2386, Adjusted R-squared:  0.03554 
+## F-statistic: 1.175 on 4 and 15 DF,  p-value: 0.3611</code></pre>
+<pre class="r"><code>anova(tw_RS.lm)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["int"],"align":["right"]},{"label":["Sum Sq"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Mean Sq"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["F value"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"63.66600","3":"21.22200","4":"0.6952171","5":"0.5692015","_rn_":"treat_code"},{"1":"1","2":"79.80625","3":"79.80625","4":"2.6143940","5":"0.1267297","_rn_":"block"},{"1":"15","2":"457.88575","3":"30.52572","4":"NA","5":"NA","_rn_":"Residuals"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>cv.model(tw_RS.lm)</code></pre>
+<pre><code>## [1] 0.747542</code></pre>
+<pre class="r"><code>LSD.test(tw_RS.lm,&quot;treat_code&quot;, console=TRUE)</code></pre>
+<pre><code>## 
+## Study: tw_RS.lm ~ &quot;treat_code&quot;
+## 
+## LSD t Test for tw_kg 
+## 
+## Mean Square Error:  30.52572 
+## 
+## treat_code,  means and individual ( 95 %) CI
+## 
+##          tw_kg      std r      LCL      UCL   Min   Max
+## Central 738.30 2.501000 5 733.0335 743.5665 735.0 741.4
+## Check   739.60 4.798437 5 734.3335 744.8665 733.7 746.6
+## North   741.66 7.252793 5 736.3935 746.9265 733.7 753.0
+## South   736.80 7.248448 5 731.5335 742.0665 727.3 745.3
+## 
+## Alpha: 0.05 ; DF Error: 15
+## Critical Value of t: 2.13145 
+## 
+## least Significant Difference: 7.447971 
+## 
+## Treatments with the same letter are not significantly different.
+## 
+##          tw_kg groups
+## North   741.66      a
+## Check   739.60      a
+## Central 738.30      a
+## South   736.80      a</code></pre>
+</div>
+<div id="analyze-by-location---manheim-3" class="section level3">
+<h3>Analyze by location - Manheim</h3>
+<pre class="r"><code>tw_LD &lt;- test_weight %&gt;% 
+   filter(location!=&quot;Rock Springs&quot;)
+
+tw_LD.lm&lt;-with(tw_LD, lm(tw_kg~treat_code+block)) 
+
+summary(tw_LD.lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = tw_kg ~ treat_code + block)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+##  -6.88  -4.72  -0.96   4.96  11.04 
+## 
+## Coefficients:
+##                   Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)      7.506e+02  4.701e+00 159.675   &lt;2e-16 ***
+## treat_codeCheck  1.923e-15  4.432e+00   0.000    1.000    
+## treat_codeNorth -3.200e+00  4.432e+00  -0.722    0.485    
+## treat_codeSouth  6.400e+00  4.432e+00   1.444    0.177    
+## block            9.600e-01  1.402e+00   0.685    0.508    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 6.268 on 11 degrees of freedom
+## Multiple R-squared:  0.3302, Adjusted R-squared:  0.08658 
+## F-statistic: 1.355 on 4 and 11 DF,  p-value: 0.3108</code></pre>
+<pre class="r"><code>anova(tw_LD.lm)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["int"],"align":["right"]},{"label":["Sum Sq"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Mean Sq"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["F value"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"194.560","3":"64.85333","4":"1.6508689","5":"0.2344873","_rn_":"treat_code"},{"1":"1","2":"18.432","3":"18.43200","4":"0.4691943","5":"0.5075349","_rn_":"block"},{"1":"11","2":"432.128","3":"39.28436","4":"NA","5":"NA","_rn_":"Residuals"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>cv.model(tw_LD.lm)</code></pre>
+<pre><code>## [1] 0.8314837</code></pre>
+<pre class="r"><code>LSD.test(tw_LD.lm,&quot;treat_code&quot;, console=TRUE)</code></pre>
+<pre><code>## 
+## Study: tw_LD.lm ~ &quot;treat_code&quot;
+## 
+## LSD t Test for tw_kg 
+## 
+## Mean Square Error:  39.28436 
+## 
+## treat_code,  means and individual ( 95 %) CI
+## 
+##         tw_kg      std r      LCL      UCL   Min   Max
+## Central 753.0 7.390083 4 746.1024 759.8976 746.6 759.4
+## Check   753.0 7.390083 4 746.1024 759.8976 746.6 759.4
+## North   749.8 6.400000 4 742.9024 756.6976 746.6 759.4
+## South   759.4 0.000000 4 752.5024 766.2976 759.4 759.4
+## 
+## Alpha: 0.05 ; DF Error: 11
+## Critical Value of t: 2.200985 
+## 
+## least Significant Difference: 9.754656 
+## 
+## Treatments with the same letter are not significantly different.
+## 
+##         tw_kg groups
+## South   759.4      a
+## Central 753.0      a
+## Check   753.0      a
+## North   749.8      a</code></pre>
+</div>
+<div id="visualize-the-data---test-weight" class="section level3">
+<h3>Visualize the data - Test weight</h3>
+<pre class="r"><code>tw_mlh &lt;- test_weight %&gt;%  
+  ggplot(aes(x = treat_code,
+             y = tw_kg,
+             fill = location)) +
+  geom_boxplot(size = 0.6,
+               outlier.colour = NA, width=0.4,
+               position = position_dodge(width = 0.5)
+               ) +
+  geom_jitter(position=position_jitterdodge(dodge.width=0.5, jitter.width = 0.1),
+              size=1.7,
+              alpha=0.6, 
+              aes(colour=location)) +
+   theme_minimal() +
+  scale_color_manual(breaks = c(&quot;Manheim&quot;, &quot;Rock Springs&quot;), values=c(&quot;#00AFBB&quot;, &quot;#E7B800&quot;)) +
+  scale_fill_manual(breaks = c(&quot;Manheim&quot;, &quot;Rock Springs&quot;), values=c(&quot;white&quot;, &quot;white&quot;)) +
+   scale_x_discrete(limits=c(&quot;Check&quot;,&quot;North&quot;, &quot;Central&quot;, &quot;South&quot;))+
+   labs(y = expression(Test~weight~(kg~m^-3)),
+        x = &quot;&quot;,
+       title = &quot;&quot;,
+       color = &quot;&quot;,
+       fill = &quot;&quot; ) +
+  theme(axis.text = element_text(size = 12),
+        plot.title = element_text(hjust = 0.5)) +
+  theme(text = element_text(size = 12)) +
+  #ylim(0,100)+
+   theme(legend.title=element_blank()) +
+   theme(legend.position = &quot;none&quot;)+
+   theme(legend.position = &quot;top&quot;) 
+
+tw_mlh</code></pre>
+<p><img src="code-field-experiment_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<pre class="r"><code>#ggsave(&quot;plots/tw_mlh.png&quot;, width = 7, height = 4, dpi = 300)</code></pre>
+</div>
+</div>
+<div id="fusarium-damage-kernel-fdk" class="section level2">
+<h2>Fusarium damage kernel (FDK)</h2>
+<pre class="r"><code>fdk &lt;- read_excel(&quot;data/field_experiment.xlsx&quot;, sheet = &quot;quality&quot;)</code></pre>
+<div id="analyze-by-location---rock-springs-4" class="section level3">
+<h3>Analyze by location - Rock Springs</h3>
+<pre class="r"><code>fdk_RS &lt;- fdk %&gt;% 
+   filter(location!=&quot;Manheim&quot;)
+
+fdk_RS.lm&lt;-with(fdk_RS, lm(FDK~treat_code+block)) 
+
+summary(fdk_RS.lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = FDK ~ treat_code + block)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.2000 -1.1529  0.1123  1.3326  5.6812 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)      5.85507    0.82573   7.091 2.68e-09 ***
+## treat_codeCheck -0.33333    0.79201  -0.421  0.67549    
+## treat_codeNorth  0.02029    0.84612   0.024  0.98096    
+## treat_codeSouth  1.70870    0.76129   2.244  0.02884 *  
+## block            0.55942    0.20226   2.766  0.00772 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.169 on 55 degrees of freedom
+## Multiple R-squared:  0.211,  Adjusted R-squared:  0.1536 
+## F-statistic: 3.676 on 4 and 55 DF,  p-value: 0.01007</code></pre>
+<pre class="r"><code>anova(fdk_RS.lm)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["int"],"align":["right"]},{"label":["Sum Sq"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Mean Sq"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["F value"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"33.18889","3":"11.062963","4":"2.351502","5":"0.082220566","_rn_":"treat_code"},{"1":"1","2":"35.98937","3":"35.989372","4":"7.649765","5":"0.007715441","_rn_":"block"},{"1":"55","2":"258.75507","3":"4.704638","4":"NA","5":"NA","_rn_":"Residuals"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>cv.model(fdk_RS.lm)</code></pre>
+<pre><code>## [1] 27.22616</code></pre>
+<pre class="r"><code>LSD.test(fdk_RS.lm,&quot;treat_code&quot;, console=TRUE)</code></pre>
+<pre><code>## 
+## Study: fdk_RS.lm ~ &quot;treat_code&quot;
+## 
+## LSD t Test for FDK 
+## 
+## Mean Square Error:  4.704638 
+## 
+## treat_code,  means and individual ( 95 %) CI
+## 
+##              FDK      std  r      LCL       UCL Min Max
+## Central 7.533333 2.099887 15 6.410992  8.655674   4  11
+## Check   7.200000 2.756810 15 6.077659  8.322341   3  14
+## North   7.833333 1.850471 12 6.578518  9.088149   4  10
+## South   9.055556 2.287362 18 8.031003 10.080108   6  15
+## 
+## Alpha: 0.05 ; DF Error: 55
+## Critical Value of t: 2.004045 
+## 
+## Groups according to probability of means differences and alpha level( 0.05 )
+## 
+## Treatments with the same letter are not significantly different.
+## 
+##              FDK groups
+## South   9.055556      a
+## North   7.833333     ab
+## Central 7.533333      b
+## Check   7.200000      b</code></pre>
+</div>
+<div id="analyze-by-location---manheim-4" class="section level3">
+<h3>Analyze by location - Manheim</h3>
+<pre class="r"><code>fdk_LD &lt;- fdk %&gt;% 
+   filter(location!=&quot;Rock Springs&quot;)
+
+fdk_LD.lm&lt;-with(fdk_LD, lm(FDK~treat_code+block)) 
+
+summary(fdk_LD.lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = FDK ~ treat_code + block)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.5792 -1.5417 -0.2917  1.7292  4.6958 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)      10.3542     1.0696   9.680 2.29e-12 ***
+## treat_codeCheck   0.8333     1.0085   0.826  0.41317    
+## treat_codeNorth   0.7500     1.0085   0.744  0.46109    
+## treat_codeSouth  -0.8333     1.0085  -0.826  0.41317    
+## block            -0.9417     0.3189  -2.953  0.00509 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.47 on 43 degrees of freedom
+## Multiple R-squared:  0.2221, Adjusted R-squared:  0.1498 
+## F-statistic:  3.07 on 4 and 43 DF,  p-value: 0.02606</code></pre>
+<pre class="r"><code>anova(fdk_LD.lm)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["int"],"align":["right"]},{"label":["Sum Sq"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Mean Sq"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["F value"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"21.72917","3":"7.243056","4":"1.187028","5":"0.325930446","_rn_":"treat_code"},{"1":"1","2":"53.20417","3":"53.204167","4":"8.719363","5":"0.005085369","_rn_":"block"},{"1":"43","2":"262.37917","3":"6.101841","4":"NA","5":"NA","_rn_":"Residuals"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>cv.model(fdk_LD.lm)</code></pre>
+<pre><code>## [1] 30.17027</code></pre>
+<pre class="r"><code>LSD.test(fdk_LD.lm,&quot;treat_code&quot;, console=TRUE)</code></pre>
+<pre><code>## 
+## Study: fdk_LD.lm ~ &quot;treat_code&quot;
+## 
+## LSD t Test for FDK 
+## 
+## Mean Square Error:  6.101841 
+## 
+## treat_code,  means and individual ( 95 %) CI
+## 
+##              FDK      std  r      LCL       UCL Min Max
+## Central 8.000000 2.558409 12 6.561932  9.438068   5  12
+## Check   8.833333 3.406767 12 7.395265 10.271401   4  14
+## North   8.750000 2.378884 12 7.311932 10.188068   6  13
+## South   7.166667 2.208798 12 5.728599  8.604735   4  12
+## 
+## Alpha: 0.05 ; DF Error: 43
+## Critical Value of t: 2.016692 
+## 
+## least Significant Difference: 2.033735 
+## 
+## Treatments with the same letter are not significantly different.
+## 
+##              FDK groups
+## Check   8.833333      a
+## North   8.750000      a
+## Central 8.000000      a
+## South   7.166667      a</code></pre>
+</div>
+<div id="visualize-the-data---fdk" class="section level3">
+<h3>Visualize the data - FDK</h3>
+<pre class="r"><code>fdk_mlh &lt;- fdk %&gt;%  
+  ggplot(aes(x = treat_code,
+             y = FDK,
+             fill = location)) +
+  geom_boxplot(size = 0.6,
+               outlier.colour = NA, width=0.4,
+               position = position_dodge(width = 0.5)
+               ) +
+  geom_jitter(position=position_jitterdodge(dodge.width=0.5, jitter.width = 0.1),
+              size=1.7,
+              alpha=0.6, 
+              aes(colour=location)) +
+   theme_minimal() +
+  scale_color_manual(breaks = c(&quot;Manheim&quot;, &quot;Rock Springs&quot;), values=c(&quot;#00AFBB&quot;, &quot;#E7B800&quot;)) +
+  scale_fill_manual(breaks = c(&quot;Manheim&quot;, &quot;Rock Springs&quot;), values=c(&quot;white&quot;, &quot;white&quot;)) +
+   scale_x_discrete(limits=c(&quot;Check&quot;,&quot;North&quot;, &quot;Central&quot;, &quot;South&quot;))+
+   labs(y = &quot;Fusarium-damaged kernels (%)&quot;,
+        x = &quot;&quot;,
+       title = &quot;&quot;,
+       color = &quot;&quot;,
+       fill = &quot;&quot; ) +
+  theme(axis.text = element_text(size = 12),
+        plot.title = element_text(hjust = 0.5)) +
+  theme(text = element_text(size = 12)) +
+  #ylim(0,100)+
+   theme(legend.title=element_blank()) +
+   theme(legend.position = &quot;none&quot;)+
+   theme(legend.position = &quot;top&quot;) 
+
+fdk_mlh</code></pre>
+<p><img src="code-field-experiment_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<pre class="r"><code>#ggsave(&quot;plots/fdk_mlh.png&quot;, width = 7, height = 4, dpi = 300)</code></pre>
+</div>
+</div>
+<div id="seed-germination" class="section level2">
+<h2>Seed germination (%)</h2>
+<pre class="r"><code>germinability &lt;- read_excel(&quot;data/field_experiment.xlsx&quot;, sheet = &quot;germinability&quot;)</code></pre>
+<div id="analyze-by-location---rock-springs-5" class="section level3">
+<h3>Analyze by location - Rock Springs</h3>
+<pre class="r"><code>germ_RS &lt;- germinability %&gt;% 
+   filter(location!=&quot;Manheim&quot;)
+
+germ_RS.lm&lt;-with(germ_RS, lm(perc~treat_code+block)) 
+
+summary(germ_RS.lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = perc ~ treat_code + block)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -31.436 -21.865 -13.604   5.048  67.688 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)       48.179     12.128   3.972 0.000209 ***
+## treat_codeCheck   -1.722     11.766  -0.146 0.884165    
+## treat_codeNorth  -10.651     11.766  -0.905 0.369308    
+## treat_codeSouth   -9.011     11.766  -0.766 0.447070    
+## block             -1.304      2.942  -0.443 0.659229    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 32.22 on 55 degrees of freedom
+## Multiple R-squared:  0.02482,    Adjusted R-squared:  -0.04611 
+## F-statistic: 0.3499 on 4 and 55 DF,  p-value: 0.843</code></pre>
+<pre class="r"><code>anova(germ_RS.lm)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["int"],"align":["right"]},{"label":["Sum Sq"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Mean Sq"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["F value"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"1249.2222","3":"416.4074","4":"0.4010338","5":"0.7528004","_rn_":"treat_code"},{"1":"1","2":"204.1228","3":"204.1228","4":"0.1965867","5":"0.6592295","_rn_":"block"},{"1":"55","2":"57108.4170","3":"1038.3349","4":"NA","5":"NA","_rn_":"Residuals"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>cv.model(germ_RS.lm)</code></pre>
+<pre><code>## [1] 82.7918</code></pre>
+<pre class="r"><code>LSD.test(germ_RS.lm,&quot;treat_code&quot;, console=TRUE)</code></pre>
+<pre><code>## 
+## Study: germ_RS.lm ~ &quot;treat_code&quot;
+## 
+## LSD t Test for perc 
+## 
+## Mean Square Error:  1038.335 
+## 
+## treat_code,  means and individual ( 95 %) CI
+## 
+##             perc      std  r      LCL      UCL       Min Max
+## Central 44.26667 29.57213 15 27.59302 60.94031 12.666667 100
+## Check   42.54444 35.67526 15 25.87080 59.21809  8.500000 100
+## North   33.61587 29.25310 15 16.94223 50.28952 10.285714 100
+## South   35.25608 33.02687 15 18.58244 51.92973  7.111111 100
+## 
+## Alpha: 0.05 ; DF Error: 55
+## Critical Value of t: 2.004045 
+## 
+## least Significant Difference: 23.58009 
+## 
+## Treatments with the same letter are not significantly different.
+## 
+##             perc groups
+## Central 44.26667      a
+## Check   42.54444      a
+## South   35.25608      a
+## North   33.61587      a</code></pre>
+<p>Seed germination was not influenced by treatments in Rock Springs.</p>
+</div>
+<div id="analyze-by-location---manheim-5" class="section level3">
+<h3>Analyze by location - Manheim</h3>
+<pre class="r"><code>germ_LD &lt;- germinability %&gt;% 
+   filter(location!=&quot;Rock Springs&quot;)
+
+germ_LD.lm&lt;-with(germ_LD, lm(perc~treat_code+block)) 
+
+summary(germ_LD.lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = perc ~ treat_code + block)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -37.759 -23.297  -8.734   4.330  66.352 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)       50.779     13.841   3.669 0.000668 ***
+## treat_codeCheck    3.981     13.050   0.305 0.761761    
+## treat_codeNorth   -1.352     13.050  -0.104 0.917974    
+## treat_codeSouth   -4.087     13.050  -0.313 0.755635    
+## block             -4.945      4.127  -1.198 0.237377    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 31.97 on 43 degrees of freedom
+## Multiple R-squared:  0.04089,    Adjusted R-squared:  -0.04832 
+## F-statistic: 0.4584 on 4 and 43 DF,  p-value: 0.7658</code></pre>
+<pre class="r"><code>anova(germ_LD.lm)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["int"],"align":["right"]},{"label":["Sum Sq"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Mean Sq"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["F value"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"406.2544","3":"135.4181","4":"0.1325335","5":"0.9401748","_rn_":"treat_code"},{"1":"1","2":"1467.0873","3":"1467.0873","4":"1.4358358","5":"0.2373772","_rn_":"block"},{"1":"43","2":"43935.9114","3":"1021.7654","4":"NA","5":"NA","_rn_":"Residuals"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>cv.model(germ_LD.lm)</code></pre>
+<pre><code>## [1] 84.00309</code></pre>
+<pre class="r"><code>LSD.test(germ_LD.lm,&quot;treat_code&quot;, console=TRUE)</code></pre>
+<pre><code>## 
+## Study: germ_LD.lm ~ &quot;treat_code&quot;
+## 
+## LSD t Test for perc 
+## 
+## Mean Square Error:  1021.765 
+## 
+## treat_code,  means and individual ( 95 %) CI
+## 
+##             perc      std  r      LCL      UCL      Min Max
+## Central 38.41667 31.88652 12 19.80760 57.02573 6.000000 100
+## Check   42.39815 34.68167 12 23.78908 61.00721 7.111111 100
+## North   37.06481 30.66002 12 18.45575 55.67388 7.111111  96
+## South   34.32937 31.11174 12 15.72030 52.93843 8.500000 100
+## 
+## Alpha: 0.05 ; DF Error: 43
+## Critical Value of t: 2.016692 
+## 
+## least Significant Difference: 26.31719 
+## 
+## Treatments with the same letter are not significantly different.
+## 
+##             perc groups
+## Check   42.39815      a
+## Central 38.41667      a
+## North   37.06481      a
+## South   34.32937      a</code></pre>
+</div>
+<div id="visualize-the-data---seed-germination" class="section level3">
+<h3>Visualize the data - Seed germination (%)</h3>
+<pre class="r"><code>seed_mlh &lt;- germinability %&gt;%  
+  ggplot(aes(x = treat_code,
+             y = perc,
+             fill = location)) +
+  geom_boxplot(size = 0.6,
+               outlier.colour = NA, width=0.4,
+               position = position_dodge(width = 0.5)
+               ) +
+  geom_jitter(position=position_jitterdodge(dodge.width=0.5, jitter.width = 0.1),
+              size=1.7,
+              alpha=0.6, 
+              aes(colour=location)) +
+   theme_minimal() +
+  scale_color_manual(breaks = c(&quot;Manheim&quot;, &quot;Rock Springs&quot;), values=c(&quot;#00AFBB&quot;, &quot;#E7B800&quot;)) +
+  scale_fill_manual(breaks = c(&quot;Manheim&quot;, &quot;Rock Springs&quot;), values=c(&quot;white&quot;, &quot;white&quot;)) +
+   scale_x_discrete(limits=c(&quot;Check&quot;,&quot;North&quot;, &quot;Central&quot;, &quot;South&quot;))+
+   labs(y = &quot;Seed germination (%)&quot;,
+        x = &quot;&quot;,
+       title = &quot;&quot;,
+       color = &quot;&quot;,
+       fill = &quot;&quot; ) +
+  theme(axis.text = element_text(size = 12),
+        plot.title = element_text(hjust = 0.5)) +
+  theme(text = element_text(size = 12)) +
+   theme(legend.title=element_blank()) +
+   theme(legend.position = &quot;none&quot;)+
+   theme(legend.position = &quot;top&quot;) 
+
+seed_mlh</code></pre>
+<p><img src="code-field-experiment_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<pre class="r"><code>#ggsave(&quot;plots/seed_ger_mlh.png&quot;, width = 7, height = 4, dpi = 300)</code></pre>
+</div>
+</div>
+<div id="grid" class="section level2">
+<h2>GRID</h2>
+<pre class="r"><code>library(cowplot)
+
+grid_mlh &lt;- plot_grid(sev_mlh, don_mlh, yld_mlh, tw_mlh, fdk_mlh, seed_mlh,  ncol = 2, align = &quot;h&quot;, labels = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;, &quot;E&quot;, &quot;F&quot;))
+
+grid_mlh</code></pre>
+<p><img src="code-field-experiment_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<pre class="r"><code>ggsave(&quot;figures/Figure_04.png&quot;, width = 10, height = 12, dpi = 300)</code></pre>
+</div>
+
+
+
+Copyright 2021 Maira R. Duffeck
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = false;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+name: teste
+output_dir: docs
+output:
+  html_document:
+    css: style.css
+    theme: flatly
+    df_print: paged
+    highlight: default
+    include:
+      after_body: footer.md
+    toc: yes
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+    lib_dir: site_libs
+    self_contained: no
+navbar:
+  title: Investigating FHB in PA
+  left:
+  - text: About
+    icon: fa fa-home
+    href: index.html    
+  - text: FHB severity
+    icon: fa-bar-chart 
+    href: FHB_severity.html
+  - text: In vitro experiments 
+    href: code-lab-experiment.html    
+  - text: In vivo experiments 
+    href: code-field-experiment.html
+  right:

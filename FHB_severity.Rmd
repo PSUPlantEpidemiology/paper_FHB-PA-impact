@@ -1,0 +1,148 @@
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+```
+
+
+# Loading packages
+
+```{r, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(ggmap)
+library(maps)
+library(mapdata)
+library(viridis)
+library(readxl)
+library(cowplot)
+library(lme4)
+library(agricolae)
+library(car)
+theme_set(theme_minimal())
+
+if(!"here" %in%installed.packages()){
+  install.packages("here")
+}
+library("here")
+
+```
+
+
+
+## Map FHB severity 2018 
+
+```{r}
+
+## Loading the data set
+
+map_inf_2018 <- read.csv(here::here( "data", "pa_county.csv"), header = T, sep = ",")
+
+
+inf_2018 <- data.frame(
+  county = c("Armstrong", "Centre", "Lancaster", "Potter", "Tioga", "York"),
+  long = c(-79.66978, -77.64151,-75.93410, -78.04831, -76.97115, -77.09147),
+  lat = c(41.08680, 40.74876, 40.04975, 41.47642, 41.99781, 40.04975))
+
+
+  map_inf_2018 %>%
+  ggplot() +
+  geom_polygon(aes(long, lat, group = group, fill = sev_2018),
+               color = "grey50",
+               alpha = 1) +
+  scale_fill_distiller(direction = 1,
+                       na.value = "white",
+                       palette = "Greens") +
+  geom_label(data = inf_2018, aes(long, lat, label = county), size = 2) +
+  coord_map() +
+  labs(fill = "FHB severity (%)") +
+  labs(x = "Longitude", y = "Latitude") +
+  theme(axis.text = element_text(size = 12)) +
+  theme(legend.text = element_text(size = 12)) +
+  theme_void() +
+  ggtitle("2018") +
+  theme(plot.title = element_text(
+    hjust = 0.5,
+    vjust = 0.5,
+    face = 'bold'
+  ))
+
+
+```
+
+
+
+
+## Map FHB severity 2019 
+
+```{r}
+
+## Loading the data set
+
+map_inf_2019 <- 
+  read.csv(here::here( "data", "pa_county.csv"), header = T, sep = ",")
+
+
+inf_2019 <- 
+  data.frame(
+  county = c("Centre", "Lancaster", "Potter", "Crawford", "Erie"),
+  long = c( -77.64151,-75.93410, -78.04831, -79.7, -79.7),
+  lat = c( 40.74876, 40.04975, 41.5, 41.7, 42.0))
+
+
+# map_inf_2019 <- 
+  map_inf_2019 %>%
+  ggplot() +
+  geom_polygon(aes(long, lat, group = group, fill = sev_2019),color = "grey50", alpha=1) +
+  scale_fill_distiller(direction = 1,
+                       na.value = "white",
+                       palette = "Greens") +
+  geom_label(data=inf_2019, aes(long, lat, label = county), size=2)+
+  coord_map() +
+  labs(fill = "FHB severity (%)")+ 
+  labs(x = "Longitude", y = "Latitude")+
+  theme(axis.text=element_text(size=12)) + 
+  theme(legend.text=element_text(size=12))+
+  theme_void()+
+  ggtitle("2019")+
+  theme(plot.title=element_text( hjust=0.5, vjust=0.5, face='bold'))
+
+
+```
+
+## Combining maps with the same scale
+
+```{r}
+require(gtable)
+library(grid)
+library(ggplotify)
+
+labs <- 
+bind_rows(
+  mutate(inf_2018, variable = "2018"),
+  mutate(inf_2019, variable = "2019")
+  ) 
+
+#Melt data frame and plot together 
+map_inf_2019 %>% 
+  reshape2::melt(measure.vars = c("sev_2018", "sev_2019")) %>% 
+  mutate(variable = gsub("sev_","", variable)) %>% 
+  ggplot() +
+  geom_polygon(aes(long, lat, group = group, fill = value),
+               color = "grey50", alpha=1) +
+  facet_wrap(~variable,
+             ncol = 2)+
+  scale_fill_distiller(direction = 1,
+                       na.value = "white",
+                       palette = "Greens") +
+  geom_label(data=labs, aes(long, lat, label = county), size=2)+
+  coord_map() +
+  labs(fill = "FHB severity (%)")+ 
+  labs(x = "Longitude", y = "Latitude")+
+  theme(axis.text=element_text(size=12)) + 
+  theme(legend.text=element_text(size=12))+
+  theme_void() +
+   theme(legend.position = "top")
+
+ggsave("figures/Figure_02.png", width = 8, height = 6, dpi = 300)
+
+  
+```

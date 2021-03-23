@@ -1,0 +1,3 @@
+"0",""
+"0","cnd <- read_excel(""data/lab_experiment.xlsx"", sheet = ""conidia"")"
+"0",""

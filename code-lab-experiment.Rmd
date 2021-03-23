@@ -1,0 +1,400 @@
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+```
+
+
+# Loading packages
+
+```{r, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(readxl)
+library(agricolae)
+library(ggjoy)
+library(drc)
+library(ggpubr)
+library(rstatix)
+library(ec50estimator)
+library(car)
+library(FactoMineR)
+library(factoextra)
+
+```
+
+
+## Mycelium growth rate
+
+```{r}
+
+mgr <- read_excel("data/lab_experiment.xlsx", sheet = "mycelia") %>%
+  group_by(isolate) %>% 
+  mutate(rep1 = as.numeric(rep1),
+          rep2 = as.numeric(rep2))
+
+nrow(mgr)
+
+```
+
+### Change the format of the data
+
+```{r}
+
+mgr1 <- mgr %>% gather(rep, mg5, rep1:rep2)
+
+head(mgr1)
+
+```
+
+
+### Mycelia growth rate by day
+
+```{r}
+  
+mgr2 <- mgr1 %>%
+  group_by(region, location, isolate, man_zone) %>%
+  summarize(mean_mg = mean(mg5),
+            mgr_day = mean_mg/5) 
+
+```
+
+### Data analysis - Mycelia growth
+
+```{r message=FALSE, warning=FALSE}
+
+mycelia.lm<-with(mgr2, lm(mgr_day~region)) 
+
+summary(mycelia.lm)
+anova(mycelia.lm)
+
+cv.model(mycelia.lm)
+LSD.test(mycelia.lm,"region",console=TRUE)
+
+```
+
+
+### Visualize the data - Mycelium growth
+
+```{r}
+
+mycelium_mlh <- mgr2 %>% 
+  group_by(man_zone) %>%   
+  ggplot(aes(x=man_zone, y=mgr_day)) +
+   geom_boxplot(size = 1.1, width = 0.3) +
+  geom_jitter(size = 2, alpha = 0.5, width = 0.2, color = "#E69F00") +
+  scale_x_discrete(limits=c("North", "Central", "South")) +
+  scale_color_manual(values=c("#E69F00"))+
+   labs(y = "Radial growth rate (mm/day)", 
+        x = "",
+       title = "") +
+  theme_minimal()+
+  theme(axis.text = element_text(size = 12),
+        plot.title = element_text(hjust = 0.5)) +
+  theme(text = element_text(size = 12))
+
+mycelium_mlh
+
+#ggsave("plots/mycelium_mhl.png", width = 7, height = 5, dpi = 300)
+
+```
+
+## Conidia production
+
+```{r}
+
+cnd <- read_excel("data/lab_experiment.xlsx", sheet = "conidia")
+
+```
+
+
+### Data analysis - Conidia production
+
+```{r message=FALSE, warning=FALSE}
+
+conidia.lm<-with(cnd, lm(conc_spores~region)) 
+
+summary(conidia.lm)
+anova(conidia.lm)
+
+cv.model(conidia.lm)
+LSD.test(conidia.lm,"region",console=TRUE)
+
+```
+
+
+### Visualize the data - Conidia production
+
+```{r message=FALSE, warning=FALSE}
+
+cnd_mlh <- cnd %>% 
+  group_by(man_zone) %>% 
+  ggplot(aes(x=man_zone, y=conc_spores)) +
+   geom_boxplot(size = 1.1, width = 0.3, outlier.colour = NA) +
+  geom_jitter(size = 2, alpha = 0.5, width = 0.2, color = "#56B4E9") +
+  scale_x_discrete(limits=c("North", "Central", "South")) +
+  scale_color_manual(values=c("#56B4E9")) +
+  theme_minimal() +
+   labs(y = expression(N.~of~macroconidia~x~10 ^ {3}),
+        x = "",
+       title = "",
+       color = "",
+       fill = "" ) +
+  theme(axis.text = element_text(size = 12),
+        plot.title = element_text(hjust = 0.5)) +
+  theme(text = element_text(size = 12))
+
+cnd_mlh
+
+#ggsave("plots/cnd_mhl.png", width = 7, height = 5, dpi = 300)
+
+```
+
+
+## GRID
+
+```{r}
+library(cowplot)
+
+grid <- plot_grid(mycelium_mlh, cnd_mlh, ncol = 2, align = "v", labels = c("A", "B"))
+
+grid
+
+ggsave("figures/Figure_03.png", width = 10, height = 4, dpi = 300)
+
+
+```
+
+
+## Fungicide sensitivity
+
+```{r}
+
+fung <- read_excel("data/lab_experiment.xlsx", sheet = "fungicide") %>%
+  filter(isolate!="PH1")
+
+
+```
+
+
+### Change the format of the data
+
+```{r}
+fung1 <- fung %>%
+  group_by(assay, fungicide, isolate, dose, rep) %>%
+  summarize(mgr = c(da+db)/2)
+
+```
+
+### Data analysis - TEB
+
+```{r message=FALSE, warning=FALSE}
+## Checking the difference between assays
+
+teb <- fung1 %>%
+  filter(fungicide!="Metconazole")
+
+teb_lm<-with(teb, lm(mgr~assay)) 
+
+summary(teb_lm)
+anova(teb_lm)
+
+cv.model(teb_lm)
+LSD.test(teb_lm,"assay",console=TRUE)
+
+```
+
+### Combining assays - TEB
+
+```{r}
+assay1 <- teb %>% 
+  filter(assay==1)
+
+assay2 <- teb %>% 
+  filter(assay==2)
+
+assay2$rep[assay2$rep==1]<-3
+assay2$rep[assay2$rep==2]<-4
+assay2$assay[assay2$assay==2]<-1
+
+teb1 <- rbind(assay1, assay2) %>% 
+  arrange(isolate, dose)
+
+```
+
+
+
+### Data analysis - MET
+
+```{r message=FALSE, warning=FALSE}
+## Checking the difference between assays
+
+met <- fung1 %>%
+  filter(fungicide!="Tebuconazole")
+
+met_lm<-with(met, lm(mgr~assay)) 
+
+summary(met_lm)
+anova(met_lm)
+
+cv.model(met_lm)
+LSD.test(met_lm,"assay",console=TRUE)
+
+```
+
+
+### Combining assays - MET
+
+```{r}
+
+assay1_met <- met %>% 
+  filter(assay==1)
+
+assay2_met <- met %>% 
+  filter(assay==2)
+
+assay2_met$rep[assay2_met$rep==1]<-3
+assay2_met$rep[assay2_met$rep==2]<-4
+assay2_met$assay[assay2_met$assay==2]<-1
+
+met1 <- rbind(assay1_met, assay2_met) %>% 
+  arrange(isolate, dose)
+
+```
+
+
+### Combining TEB and MET dataset
+
+```{r}
+
+fung_all <- rbind(teb1, met1)
+
+```
+
+
+### EC50 estimation
+
+```{r message=FALSE, warning=FALSE}
+
+library(ec50estimator)
+library(drc)
+
+ec50 = estimate_EC50(mgr~dose,
+                        data = fung_all,
+                        isolate_col = "isolate", 
+                        strata_col =  c("fungicide"),
+                        interval = "delta",
+                        fct = LL.4())
+
+ec50 <- ec50 %>%
+  rename(
+    isolate = ID)
+
+## Export data
+#write.csv(ec50, file = "data/ec50_region.csv")
+
+```
+
+
+### Statistical analysis - TEB
+
+```{r message=FALSE, warning=FALSE}
+
+ec50_all <- read_csv("data/ec50_region.csv")
+
+
+## Tebuconazole
+
+ec50_teb <- ec50_all %>%
+  filter(fungicide =="Tebuconazole")
+
+ec50_teb %>%
+  get_summary_stats(Estimate, type = "full")
+
+
+## South 
+teb_south <- ec50_teb %>%
+  filter(region == "South") 
+
+## Central
+teb_central <- ec50_teb %>%
+  filter(region == "Central")
+
+
+## North
+teb_north <- ec50_teb %>%
+  filter(region == "North")
+
+
+
+## Kolmogorov-Smornov test
+
+#H0 = equal distribution
+#H1 = different distributions
+
+ks.test(teb_south$Estimate, teb_central$Estimate, alternative = "two.side")
+ks.test(teb_south$Estimate, teb_north$Estimate, alternative = "two.side")
+ks.test(teb_central$Estimate, teb_north$Estimate, alternative = "two.side")
+
+```
+
+## Statistical analysis - MET
+
+```{r message=FALSE, warning=FALSE}
+## Tebuconazole
+
+ec50_met <- ec50_all %>%
+  filter(fungicide =="Metconazole")
+
+ec50_met %>%
+  get_summary_stats(Estimate, type = "full")
+
+
+## South 
+met_south <- ec50_met %>%
+  filter(region == "South") 
+
+## Central
+met_central <- ec50_met %>%
+  filter(region == "Central")
+
+
+## North
+met_north <- ec50_met %>%
+  filter(region == "North")
+
+
+
+## Kolmogorov-Smornov test
+
+#H0 = equal distribution
+#H1 = different distributions
+
+ks.test(met_south$Estimate, met_central$Estimate, alternative = "two.side")
+ks.test(met_south$Estimate, met_north$Estimate, alternative = "two.side")
+ks.test(met_central$Estimate, met_north$Estimate, alternative = "two.side")
+
+```
+
+
+## Data visualization - Fungicide sensitivity
+
+```{r}
+
+ec50_all %>% 
+  ggplot(aes(x = Estimate, fungicide, y = fungicide, color = fungicide, point_color = fungicide, fill = fungicide)) +
+  geom_density_ridges(
+    jittered_points = TRUE,
+    size = 0.5,
+    width = 0.2, alpha = 0.5, scale = 0.9, position = "raincloud") +
+  scale_fill_manual(values = c("#00AFBB", "#E7B800")) +
+  scale_color_manual(values = c("#00AFBB", "#E7B800"), guide = "none") +
+  scale_discrete_manual("point_color", values = c("#00AFBB", "#E7B800"), guide = "none") +
+  labs(x = expression("EC"[50]^{}*~"(mg/L)"),
+                  y = "") +
+  theme(legend.position = "none")+
+  xlim (-0.06,1)
+  
+
+ggsave("figures/Figure_05.png", width = 7, height = 4, dpi = 300)
+
+```
+

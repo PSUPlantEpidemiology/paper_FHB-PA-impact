@@ -1,0 +1,5 @@
+"0",""
+"0","fung <- read_excel(""data/lab_experiment.xlsx"", sheet = ""fungicide"") %>%"
+"0","  filter(isolate!=""PH1"")"
+"0",""
+"0",""

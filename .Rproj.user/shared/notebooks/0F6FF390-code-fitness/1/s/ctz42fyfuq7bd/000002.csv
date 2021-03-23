@@ -1,0 +1,7 @@
+"0","fungicide1 <- fungicide %>%"
+"0","  mutate(day1 = d1-6,"
+"0","         day2 = d2-6,"
+"0","         mgr =  day2-day1) %>%"
+"0","  group_by(experiment, fungicide, isolate, tri, dose, rep) %>%"
+"0","  summarize(mgr = mean(mgr)) "
+"0",""

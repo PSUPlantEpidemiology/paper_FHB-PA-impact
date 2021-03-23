@@ -1,0 +1,5 @@
+"0","fung1 <- fung %>%"
+"0","  group_by(assay, fungicide, isolate, dose, rep) %>%"
+"0","  summarize(mgr = c(da+db)/2)"
+"2","`summarise()` has grouped output by 'assay', 'fungicide', 'isolate', 'dose'. You can override using the `.groups` argument.
+"

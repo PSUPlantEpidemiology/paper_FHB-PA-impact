@@ -1,0 +1,47 @@
+"0","library(tidyverse)
+library(metafor)
+"
+"2","Loading 'metafor' package (version 2.4-0). For an overview 
+and introduction to the package please type: help(metafor).
+"
+"2","
+Attaching package: ‘metafor’
+
+"
+"2","The following object is masked from ‘package:car’:
+
+    vif
+
+"
+"0","library(ggthemes)"
+"0","library(cowplot)"
+"2","
+Attaching package: ‘cowplot’
+
+"
+"2","The following object is masked from ‘package:ggthemes’:
+
+    theme_map
+
+"
+"0","library(scales)"
+"2","
+Attaching package: ‘scales’
+
+"
+"2","The following object is masked from ‘package:purrr’:
+
+    discard
+
+"
+"2","The following object is masked from ‘package:readr’:
+
+    col_factor
+
+"
+"0","library(broom)"
+"0","library(dplyr)"
+"0","library(readxl)"
+"0","library(gsheet)"
+"0","library(janitor)"
+"0","library(cowplot)"

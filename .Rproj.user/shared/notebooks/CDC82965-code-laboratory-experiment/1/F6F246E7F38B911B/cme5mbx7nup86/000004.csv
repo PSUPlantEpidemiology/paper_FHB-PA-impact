@@ -1,0 +1,7 @@
+"0","  "
+"0","mgr2 <- mgr1 %>%"
+"0","  group_by(region, location, isolate, man_zone) %>%"
+"0","  summarize(mean_mg = mean(mg5),"
+"0","            mgr_day = mean_mg/5) "
+"2","`summarise()` has grouped output by 'region', 'location', 'isolate'. You can override using the `.groups` argument.
+"

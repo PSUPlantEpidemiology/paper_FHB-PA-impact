@@ -1,0 +1,12 @@
+
+## About
+
+<img src = "Figures/spike.jpg" width=180 height = 250 align = right>
+This website provides easy access to commented R scripts that allows reproducing the analysis of the data from our publication.
+
+In this study, we investigate the impact of FHB epidemics in Pennsylvania (PA), and performed *in vitro* and *in vivo* experiments to investigate the differential aggressiveness of *Fusarium graminearum* isolates from all three small-grain producing regions in PA (South, Central, North). For this, a 2-years survey was conducted in PA during Summer 2018 and 2019, where naturally FHB-infected spikes of different small-grain crops were collected (wheat, spelt, rye, and barley). FHB severity (%) information was recorded from each field. In the laboratory, a molecular-based approach was used to investigate the potential for mycotoxin production potential from the *F. graminearum* isolates obtained in 2018. This new knowledge will help us better understand the influence of specific management strategies in each region on the occurence of FHB epidemics and mycotoxin development. 
+
+
+## Citation
+
+Duffeck, M. R., Del Ponte, E. M., & Esker, P. D. (2021). Research compendium: Multifaceted insights of Fusarium head blight in small grains in Pennsylvania.

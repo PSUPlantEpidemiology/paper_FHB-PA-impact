@@ -1,0 +1,7 @@
+"0","sev1 <- sev %>%"
+"0","  mutate(treat = as.character(treat),"
+"0","          block = as.character(block)) %>% "
+"0","  group_by(location, block, treat, treat_code, rep) %>%"
+"0","  summarize(sev = (spikelets_dis*100)/spikelets)"
+"2","`summarise()` has grouped output by 'location', 'block', 'treat', 'treat_code'. You can override using the `.groups` argument.
+"

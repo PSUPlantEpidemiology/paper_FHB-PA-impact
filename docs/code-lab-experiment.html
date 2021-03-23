@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>code-lab-experiment.utf8</title>
+
+<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-sm-12 col-md-4 col-lg-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Investigating FHB in PA</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa fa fa-home"></span>
+     
+    About
+  </a>
+</li>
+<li>
+  <a href="FHB_severity.html">
+    <span class="fas fa-bar-chart"></span>
+     
+    FHB severity
+  </a>
+</li>
+<li>
+  <a href="code-lab-experiment.html">In vitro experiments</a>
+</li>
+<li>
+  <a href="code-field-experiment.html">In vivo experiments</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+
+</div>
+
+
+<pre class="r"><code>knitr::opts_chunk$set(echo = TRUE, warning = FALSE)</code></pre>
+<div id="loading-packages" class="section level1">
+<h1>Loading packages</h1>
+<pre class="r"><code>library(tidyverse)
+library(readxl)
+library(agricolae)
+library(ggjoy)
+library(drc)
+library(ggpubr)
+library(rstatix)
+library(ec50estimator)
+library(car)
+library(FactoMineR)
+library(factoextra)</code></pre>
+<div id="mycelium-growth-rate" class="section level2">
+<h2>Mycelium growth rate</h2>
+<pre class="r"><code>mgr &lt;- read_excel(&quot;data/lab_experiment.xlsx&quot;, sheet = &quot;mycelia&quot;) %&gt;%
+  group_by(isolate) %&gt;% 
+  mutate(rep1 = as.numeric(rep1),
+          rep2 = as.numeric(rep2))
+
+nrow(mgr)</code></pre>
+<pre><code>## [1] 294</code></pre>
+<div id="change-the-format-of-the-data" class="section level3">
+<h3>Change the format of the data</h3>
+<pre class="r"><code>mgr1 &lt;- mgr %&gt;% gather(rep, mg5, rep1:rep2)
+
+head(mgr1)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["number"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["year"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["region"],"name":[3],"type":["chr"],"align":["left"]},{"label":["location"],"name":[4],"type":["chr"],"align":["left"]},{"label":["man_zone"],"name":[5],"type":["chr"],"align":["left"]},{"label":["isolate"],"name":[6],"type":["chr"],"align":["left"]},{"label":["rep"],"name":[7],"type":["chr"],"align":["left"]},{"label":["mg5"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"2019","3":"South","4":"Lancaster","5":"South","6":"18_SG_01_i","7":"rep1","8":"66.35"},{"1":"2","2":"2019","3":"South","4":"Lancaster","5":"South","6":"18_SG_01_ii","7":"rep1","8":"36.85"},{"1":"3","2":"2019","3":"South","4":"Lancaster","5":"South","6":"18_SG_01_iii","7":"rep1","8":"45.15"},{"1":"4","2":"2019","3":"South","4":"Lancaster","5":"South","6":"18_SG_01_iv","7":"rep1","8":"64.15"},{"1":"5","2":"2019","3":"South","4":"Lancaster","5":"South","6":"18_SG_02_i","7":"rep1","8":"32.30"},{"1":"6","2":"2019","3":"South","4":"Lancaster","5":"South","6":"18_SG_02_ii","7":"rep1","8":"32.70"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div id="mycelia-growth-rate-by-day" class="section level3">
+<h3>Mycelia growth rate by day</h3>
+<pre class="r"><code>mgr2 &lt;- mgr1 %&gt;%
+  group_by(region, location, isolate, man_zone) %&gt;%
+  summarize(mean_mg = mean(mg5),
+            mgr_day = mean_mg/5) </code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;region&#39;, &#39;location&#39;, &#39;isolate&#39;. You can override using the `.groups` argument.</code></pre>
+</div>
+<div id="data-analysis---mycelia-growth" class="section level3">
+<h3>Data analysis - Mycelia growth</h3>
+<pre class="r"><code>mycelia.lm&lt;-with(mgr2, lm(mgr_day~region)) 
+
+summary(mycelia.lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = mgr_day ~ region)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -7.1829 -2.2922  0.1822  2.5028  5.5605 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 10.94530    0.24396  44.866   &lt;2e-16 ***
+## regionNorth  0.09757    0.47268   0.206    0.837    
+## regionSouth -0.10584    0.46188  -0.229    0.819    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3.162 on 291 degrees of freedom
+## Multiple R-squared:  0.0004486,  Adjusted R-squared:  -0.006421 
+## F-statistic: 0.0653 on 2 and 291 DF,  p-value: 0.9368</code></pre>
+<pre class="r"><code>anova(mycelia.lm)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["int"],"align":["right"]},{"label":["Sum Sq"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Mean Sq"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["F value"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"2","2":"1.305886","3":"0.6529429","4":"0.06530468","5":"0.9367957","_rn_":"region"},{"1":"291","2":"2909.536864","3":"9.9984085","4":"NA","5":"NA","_rn_":"Residuals"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>cv.model(mycelia.lm)</code></pre>
+<pre><code>## [1] 28.89769</code></pre>
+<pre class="r"><code>LSD.test(mycelia.lm,&quot;region&quot;,console=TRUE)</code></pre>
+<pre><code>## 
+## Study: mycelia.lm ~ &quot;region&quot;
+## 
+## LSD t Test for mgr_day 
+## 
+## Mean Square Error:  9.998408 
+## 
+## region,  means and individual ( 95 %) CI
+## 
+##          mgr_day      std   r      LCL      UCL   Min    Max
+## Central 10.94530 3.071720 168 10.46516 11.42544 5.205 16.285
+## North   11.04287 3.528334  61 10.24605 11.83969 3.860 16.580
+## South   10.83946 3.028164  65 10.06755 11.61137 4.925 16.400
+## 
+## Alpha: 0.05 ; DF Error: 291
+## Critical Value of t: 1.96815 
+## 
+## Groups according to probability of means differences and alpha level( 0.05 )
+## 
+## Treatments with the same letter are not significantly different.
+## 
+##          mgr_day groups
+## North   11.04287      a
+## Central 10.94530      a
+## South   10.83946      a</code></pre>
+</div>
+<div id="visualize-the-data---mycelium-growth" class="section level3">
+<h3>Visualize the data - Mycelium growth</h3>
+<pre class="r"><code>mycelium_mlh &lt;- mgr2 %&gt;% 
+  group_by(man_zone) %&gt;%   
+  ggplot(aes(x=man_zone, y=mgr_day)) +
+   geom_boxplot(size = 1.1, width = 0.3) +
+  geom_jitter(size = 2, alpha = 0.5, width = 0.2, color = &quot;#E69F00&quot;) +
+  scale_x_discrete(limits=c(&quot;North&quot;, &quot;Central&quot;, &quot;South&quot;)) +
+  scale_color_manual(values=c(&quot;#E69F00&quot;))+
+   labs(y = &quot;Radial growth rate (mm/day)&quot;, 
+        x = &quot;&quot;,
+       title = &quot;&quot;) +
+  theme_minimal()+
+  theme(axis.text = element_text(size = 12),
+        plot.title = element_text(hjust = 0.5)) +
+  theme(text = element_text(size = 12))
+
+mycelium_mlh</code></pre>
+<p><img src="code-lab-experiment_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<pre class="r"><code>#ggsave(&quot;plots/mycelium_mhl.png&quot;, width = 7, height = 5, dpi = 300)</code></pre>
+</div>
+</div>
+<div id="conidia-production" class="section level2">
+<h2>Conidia production</h2>
+<pre class="r"><code>cnd &lt;- read_excel(&quot;data/lab_experiment.xlsx&quot;, sheet = &quot;conidia&quot;)</code></pre>
+<div id="data-analysis---conidia-production" class="section level3">
+<h3>Data analysis - Conidia production</h3>
+<pre class="r"><code>conidia.lm&lt;-with(cnd, lm(conc_spores~region)) 
+
+summary(conidia.lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = conc_spores ~ region)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -45.022 -21.389  -2.625  14.875 144.978 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  41.0119     3.3205  12.351   &lt;2e-16 ***
+## regionNorth   4.0100     4.8179   0.832    0.406    
+## regionSouth  -0.8869     4.7543  -0.187    0.852    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 30.43 on 237 degrees of freedom
+## Multiple R-squared:  0.004793,   Adjusted R-squared:  -0.003605 
+## F-statistic: 0.5708 on 2 and 237 DF,  p-value: 0.5659</code></pre>
+<pre class="r"><code>anova(conidia.lm)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["int"],"align":["right"]},{"label":["Sum Sq"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Mean Sq"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["F value"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"2","2":"1057.254","3":"528.6271","4":"0.5707649","5":"0.5658678","_rn_":"region"},{"1":"237","2":"219503.025","3":"926.1731","4":"NA","5":"NA","_rn_":"Residuals"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>cv.model(conidia.lm)</code></pre>
+<pre><code>## [1] 72.48371</code></pre>
+<pre class="r"><code>LSD.test(conidia.lm,&quot;region&quot;,console=TRUE)</code></pre>
+<pre><code>## 
+## Study: conidia.lm ~ &quot;region&quot;
+## 
+## LSD t Test for conc_spores 
+## 
+## Mean Square Error:  926.1731 
+## 
+## region,  means and individual ( 95 %) CI
+## 
+##         conc_spores      std  r      LCL      UCL Min   Max
+## Central    41.01190 23.74602 84 34.47040 47.55341 0.0 102.5
+## North      45.02193 37.59925 76 38.14475 51.89912 0.0 190.0
+## South      40.12500 29.05119 80 33.42195 46.82805 2.5 130.0
+## 
+## Alpha: 0.05 ; DF Error: 237
+## Critical Value of t: 1.970024 
+## 
+## Groups according to probability of means differences and alpha level( 0.05 )
+## 
+## Treatments with the same letter are not significantly different.
+## 
+##         conc_spores groups
+## North      45.02193      a
+## Central    41.01190      a
+## South      40.12500      a</code></pre>
+</div>
+<div id="visualize-the-data---conidia-production" class="section level3">
+<h3>Visualize the data - Conidia production</h3>
+<pre class="r"><code>cnd_mlh &lt;- cnd %&gt;% 
+  group_by(man_zone) %&gt;% 
+  ggplot(aes(x=man_zone, y=conc_spores)) +
+   geom_boxplot(size = 1.1, width = 0.3, outlier.colour = NA) +
+  geom_jitter(size = 2, alpha = 0.5, width = 0.2, color = &quot;#56B4E9&quot;) +
+  scale_x_discrete(limits=c(&quot;North&quot;, &quot;Central&quot;, &quot;South&quot;)) +
+  scale_color_manual(values=c(&quot;#56B4E9&quot;)) +
+  theme_minimal() +
+   labs(y = expression(N.~of~macroconidia~x~10 ^ {3}),
+        x = &quot;&quot;,
+       title = &quot;&quot;,
+       color = &quot;&quot;,
+       fill = &quot;&quot; ) +
+  theme(axis.text = element_text(size = 12),
+        plot.title = element_text(hjust = 0.5)) +
+  theme(text = element_text(size = 12))
+
+cnd_mlh</code></pre>
+<p><img src="code-lab-experiment_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<pre class="r"><code>#ggsave(&quot;plots/cnd_mhl.png&quot;, width = 7, height = 5, dpi = 300)</code></pre>
+</div>
+</div>
+<div id="grid" class="section level2">
+<h2>GRID</h2>
+<pre class="r"><code>library(cowplot)
+
+grid &lt;- plot_grid(mycelium_mlh, cnd_mlh, ncol = 2, align = &quot;v&quot;, labels = c(&quot;A&quot;, &quot;B&quot;))
+
+grid</code></pre>
+<p><img src="code-lab-experiment_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<pre class="r"><code>ggsave(&quot;figures/Figure_03.png&quot;, width = 10, height = 4, dpi = 300)</code></pre>
+</div>
+<div id="fungicide-sensitivity" class="section level2">
+<h2>Fungicide sensitivity</h2>
+<pre class="r"><code>fung &lt;- read_excel(&quot;data/lab_experiment.xlsx&quot;, sheet = &quot;fungicide&quot;) %&gt;%
+  filter(isolate!=&quot;PH1&quot;)</code></pre>
+<div id="change-the-format-of-the-data-1" class="section level3">
+<h3>Change the format of the data</h3>
+<pre class="r"><code>fung1 &lt;- fung %&gt;%
+  group_by(assay, fungicide, isolate, dose, rep) %&gt;%
+  summarize(mgr = c(da+db)/2)</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;assay&#39;, &#39;fungicide&#39;, &#39;isolate&#39;, &#39;dose&#39;. You can override using the `.groups` argument.</code></pre>
+</div>
+<div id="data-analysis---teb" class="section level3">
+<h3>Data analysis - TEB</h3>
+<pre class="r"><code>## Checking the difference between assays
+
+teb &lt;- fung1 %&gt;%
+  filter(fungicide!=&quot;Metconazole&quot;)
+
+teb_lm&lt;-with(teb, lm(mgr~assay)) 
+
+summary(teb_lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = mgr ~ assay)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -31.34 -19.53  -6.34  19.61  45.47 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  31.8384     2.6699  11.925   &lt;2e-16 ***
+## assay        -0.4175     1.6886  -0.247    0.805    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 22.65 on 718 degrees of freedom
+## Multiple R-squared:  8.513e-05,  Adjusted R-squared:  -0.001308 
+## F-statistic: 0.06113 on 1 and 718 DF,  p-value: 0.8048</code></pre>
+<pre class="r"><code>anova(teb_lm)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["int"],"align":["right"]},{"label":["Sum Sq"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Mean Sq"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["F value"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"31.37304","3":"31.37304","4":"0.06112791","5":"0.8047927","_rn_":"assay"},{"1":"718","2":"368503.35596","3":"513.23587","4":"NA","5":"NA","_rn_":"Residuals"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>cv.model(teb_lm)</code></pre>
+<pre><code>## [1] 72.58303</code></pre>
+<pre class="r"><code>LSD.test(teb_lm,&quot;assay&quot;,console=TRUE)</code></pre>
+<pre><code>## 
+## Study: teb_lm ~ &quot;assay&quot;
+## 
+## LSD t Test for mgr 
+## 
+## Mean Square Error:  513.2359 
+## 
+## assay,  means and individual ( 95 %) CI
+## 
+##        mgr      std   r      LCL      UCL   Min    Max
+## 1 31.42087 22.98268 360 29.07671 33.76504 0.080 76.805
+## 2 31.00339 22.32192 360 28.65922 33.34755 1.565 76.470
+## 
+## Alpha: 0.05 ; DF Error: 718
+## Critical Value of t: 1.963273 
+## 
+## least Significant Difference: 3.315149 
+## 
+## Treatments with the same letter are not significantly different.
+## 
+##        mgr groups
+## 1 31.42087      a
+## 2 31.00339      a</code></pre>
+</div>
+<div id="combining-assays---teb" class="section level3">
+<h3>Combining assays - TEB</h3>
+<pre class="r"><code>assay1 &lt;- teb %&gt;% 
+  filter(assay==1)
+
+assay2 &lt;- teb %&gt;% 
+  filter(assay==2)
+
+assay2$rep[assay2$rep==1]&lt;-3
+assay2$rep[assay2$rep==2]&lt;-4
+assay2$assay[assay2$assay==2]&lt;-1
+
+teb1 &lt;- rbind(assay1, assay2) %&gt;% 
+  arrange(isolate, dose)</code></pre>
+</div>
+<div id="data-analysis---met" class="section level3">
+<h3>Data analysis - MET</h3>
+<pre class="r"><code>## Checking the difference between assays
+
+met &lt;- fung1 %&gt;%
+  filter(fungicide!=&quot;Tebuconazole&quot;)
+
+met_lm&lt;-with(met, lm(mgr~assay)) 
+
+summary(met_lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = mgr ~ assay)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -21.803 -17.744  -9.992  16.739  55.002 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  22.1300     2.6875   8.234 8.52e-16 ***
+## assay        -0.3271     1.6997  -0.192    0.847    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 22.8 on 718 degrees of freedom
+## Multiple R-squared:  5.156e-05,  Adjusted R-squared:  -0.001341 
+## F-statistic: 0.03702 on 1 and 718 DF,  p-value: 0.8475</code></pre>
+<pre class="r"><code>anova(met_lm)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["int"],"align":["right"]},{"label":["Sum Sq"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Mean Sq"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["F value"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"19.25376","3":"19.25376","4":"0.03702356","5":"0.8474715","_rn_":"assay"},{"1":"718","2":"373389.25143","3":"520.04074","4":"NA","5":"NA","_rn_":"Residuals"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>cv.model(met_lm)</code></pre>
+<pre><code>## [1] 105.3837</code></pre>
+<pre class="r"><code>LSD.test(met_lm,&quot;assay&quot;,console=TRUE)</code></pre>
+<pre><code>## 
+## Study: met_lm ~ &quot;assay&quot;
+## 
+## LSD t Test for mgr 
+## 
+## Mean Square Error:  520.0407 
+## 
+## assay,  means and individual ( 95 %) CI
+## 
+##        mgr      std   r      LCL      UCL Min    Max
+## 1 21.80293 22.56728 360 19.44328 24.16258   0 76.805
+## 2 21.47587 23.03909 360 19.11622 23.83553   0 76.470
+## 
+## Alpha: 0.05 ; DF Error: 718
+## Critical Value of t: 1.963273 
+## 
+## least Significant Difference: 3.337054 
+## 
+## Treatments with the same letter are not significantly different.
+## 
+##        mgr groups
+## 1 21.80293      a
+## 2 21.47587      a</code></pre>
+</div>
+<div id="combining-assays---met" class="section level3">
+<h3>Combining assays - MET</h3>
+<pre class="r"><code>assay1_met &lt;- met %&gt;% 
+  filter(assay==1)
+
+assay2_met &lt;- met %&gt;% 
+  filter(assay==2)
+
+assay2_met$rep[assay2_met$rep==1]&lt;-3
+assay2_met$rep[assay2_met$rep==2]&lt;-4
+assay2_met$assay[assay2_met$assay==2]&lt;-1
+
+met1 &lt;- rbind(assay1_met, assay2_met) %&gt;% 
+  arrange(isolate, dose)</code></pre>
+</div>
+<div id="combining-teb-and-met-dataset" class="section level3">
+<h3>Combining TEB and MET dataset</h3>
+<pre class="r"><code>fung_all &lt;- rbind(teb1, met1)</code></pre>
+</div>
+<div id="ec50-estimation" class="section level3">
+<h3>EC50 estimation</h3>
+<pre class="r"><code>library(ec50estimator)
+library(drc)
+
+ec50 = estimate_EC50(mgr~dose,
+                        data = fung_all,
+                        isolate_col = &quot;isolate&quot;, 
+                        strata_col =  c(&quot;fungicide&quot;),
+                        interval = &quot;delta&quot;,
+                        fct = LL.4())
+
+ec50 &lt;- ec50 %&gt;%
+  rename(
+    isolate = ID)
+
+## Export data
+#write.csv(ec50, file = &quot;data/ec50_region.csv&quot;)</code></pre>
+</div>
+<div id="statistical-analysis---teb" class="section level3">
+<h3>Statistical analysis - TEB</h3>
+<pre class="r"><code>ec50_all &lt;- read_csv(&quot;data/ec50_region.csv&quot;)
+
+
+## Tebuconazole
+
+ec50_teb &lt;- ec50_all %&gt;%
+  filter(fungicide ==&quot;Tebuconazole&quot;)
+
+ec50_teb %&gt;%
+  get_summary_stats(Estimate, type = &quot;full&quot;)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["variable"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["min"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["max"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["median"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["q1"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["q3"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["iqr"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["mad"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["mean"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["sd"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["se"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["ci"],"name":[13],"type":["dbl"],"align":["right"]}],"data":[{"1":"Estimate","2":"30","3":"0.079","4":"0.742","5":"0.207","6":"0.166","7":"0.291","8":"0.125","9":"0.071","10":"0.244","11":"0.136","12":"0.025","13":"0.051","_row":"25%"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>## South 
+teb_south &lt;- ec50_teb %&gt;%
+  filter(region == &quot;South&quot;) 
+
+## Central
+teb_central &lt;- ec50_teb %&gt;%
+  filter(region == &quot;Central&quot;)
+
+
+## North
+teb_north &lt;- ec50_teb %&gt;%
+  filter(region == &quot;North&quot;)
+
+
+
+## Kolmogorov-Smornov test
+
+#H0 = equal distribution
+#H1 = different distributions
+
+ks.test(teb_south$Estimate, teb_central$Estimate, alternative = &quot;two.side&quot;)</code></pre>
+<pre><code>## 
+##  Two-sample Kolmogorov-Smirnov test
+## 
+## data:  teb_south$Estimate and teb_central$Estimate
+## D = 0.2, p-value = 0.9945
+## alternative hypothesis: two-sided</code></pre>
+<pre class="r"><code>ks.test(teb_south$Estimate, teb_north$Estimate, alternative = &quot;two.side&quot;)</code></pre>
+<pre><code>## 
+##  Two-sample Kolmogorov-Smirnov test
+## 
+## data:  teb_south$Estimate and teb_north$Estimate
+## D = 0.6, p-value = 0.05245
+## alternative hypothesis: two-sided</code></pre>
+<pre class="r"><code>ks.test(teb_central$Estimate, teb_north$Estimate, alternative = &quot;two.side&quot;)</code></pre>
+<pre><code>## 
+##  Two-sample Kolmogorov-Smirnov test
+## 
+## data:  teb_central$Estimate and teb_north$Estimate
+## D = 0.4, p-value = 0.4175
+## alternative hypothesis: two-sided</code></pre>
+</div>
+</div>
+<div id="statistical-analysis---met" class="section level2">
+<h2>Statistical analysis - MET</h2>
+<pre class="r"><code>## Tebuconazole
+
+ec50_met &lt;- ec50_all %&gt;%
+  filter(fungicide ==&quot;Metconazole&quot;)
+
+ec50_met %&gt;%
+  get_summary_stats(Estimate, type = &quot;full&quot;)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["variable"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["min"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["max"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["median"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["q1"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["q3"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["iqr"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["mad"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["mean"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["sd"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["se"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["ci"],"name":[13],"type":["dbl"],"align":["right"]}],"data":[{"1":"Estimate","2":"30","3":"0.01","4":"0.073","5":"0.027","6":"0.021","7":"0.036","8":"0.015","9":"0.011","10":"0.03","11":"0.015","12":"0.003","13":"0.006","_row":"25%"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>## South 
+met_south &lt;- ec50_met %&gt;%
+  filter(region == &quot;South&quot;) 
+
+## Central
+met_central &lt;- ec50_met %&gt;%
+  filter(region == &quot;Central&quot;)
+
+
+## North
+met_north &lt;- ec50_met %&gt;%
+  filter(region == &quot;North&quot;)
+
+
+
+## Kolmogorov-Smornov test
+
+#H0 = equal distribution
+#H1 = different distributions
+
+ks.test(met_south$Estimate, met_central$Estimate, alternative = &quot;two.side&quot;)</code></pre>
+<pre><code>## 
+##  Two-sample Kolmogorov-Smirnov test
+## 
+## data:  met_south$Estimate and met_central$Estimate
+## D = 0.4, p-value = 0.4175
+## alternative hypothesis: two-sided</code></pre>
+<pre class="r"><code>ks.test(met_south$Estimate, met_north$Estimate, alternative = &quot;two.side&quot;)</code></pre>
+<pre><code>## 
+##  Two-sample Kolmogorov-Smirnov test
+## 
+## data:  met_south$Estimate and met_north$Estimate
+## D = 0.5, p-value = 0.1678
+## alternative hypothesis: two-sided</code></pre>
+<pre class="r"><code>ks.test(met_central$Estimate, met_north$Estimate, alternative = &quot;two.side&quot;)</code></pre>
+<pre><code>## 
+##  Two-sample Kolmogorov-Smirnov test
+## 
+## data:  met_central$Estimate and met_north$Estimate
+## D = 0.6, p-value = 0.05245
+## alternative hypothesis: two-sided</code></pre>
+</div>
+<div id="data-visualization---fungicide-sensitivity" class="section level2">
+<h2>Data visualization - Fungicide sensitivity</h2>
+<pre class="r"><code>ec50_all %&gt;% 
+  ggplot(aes(x = Estimate, fungicide, y = fungicide, color = fungicide, point_color = fungicide, fill = fungicide)) +
+  geom_density_ridges(
+    jittered_points = TRUE,
+    size = 0.5,
+    width = 0.2, alpha = 0.5, scale = 0.9, position = &quot;raincloud&quot;) +
+  scale_fill_manual(values = c(&quot;#00AFBB&quot;, &quot;#E7B800&quot;)) +
+  scale_color_manual(values = c(&quot;#00AFBB&quot;, &quot;#E7B800&quot;), guide = &quot;none&quot;) +
+  scale_discrete_manual(&quot;point_color&quot;, values = c(&quot;#00AFBB&quot;, &quot;#E7B800&quot;), guide = &quot;none&quot;) +
+  labs(x = expression(&quot;EC&quot;[50]^{}*~&quot;(mg/L)&quot;),
+                  y = &quot;&quot;) +
+  theme(legend.position = &quot;none&quot;)+
+  xlim (-0.06,1)</code></pre>
+<pre><code>## Picking joint bandwidth of 0.0239</code></pre>
+<p><img src="code-lab-experiment_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<pre class="r"><code>ggsave(&quot;figures/Figure_05.png&quot;, width = 7, height = 4, dpi = 300)</code></pre>
+<pre><code>## Picking joint bandwidth of 0.0239</code></pre>
+</div>
+</div>
+
+
+
+Copyright 2021 Maira R. Duffeck
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = false;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
